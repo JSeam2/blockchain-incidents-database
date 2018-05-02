@@ -2,8 +2,6 @@
 	<div class="navbar-header">
 		<ul class="nav navbar-nav">
 			<li><a href="{{ url_for('index') }}" class="navbar-brand"><strong>BLOCKTEST</strong></a></li>
-			<li><a href="{{ url_for('index') }}">Incidents</a></li>
-			<li><a href="#">Analytics</a></li>
 		</ul>
 
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -14,6 +12,8 @@
 	</div>
 	<div class="navbar-collapse collapse" id="navbar-main">
 		<ul class="nav navbar-nav">
+			<li><a href="{{ url_for('index') }}">Incidents</a></li>
+			<li><a href="#">Analytics</a></li>
 		{% if session.user %}
 			<li><a href="{{ url_for('users_list') }}">Users</a></li>
 			<li><a href="{{ url_for('posts') }}">Incident List</a></li>
