@@ -11,17 +11,26 @@
 							<div class="post clearfix">
 								<div class="row">
 									<div class="col-lg-8">
+										<!-- Header Field For Incident Entry -->
 										<div class="page-header">
-											<h1><a href="{{ url_for('single_post', permalink=post['permalink']) }}">{{ post['title'] | safe }}</a></h1>
-											<p><span class="icon-time">&nbsp;</span><i>Posted on {{ post['date'] |formatdate }} by {{ post['author'] }}</i></p>
+											<h3><a href="{{ url_for('single_post', permalink=post['permalink']) }}">{{ post['title'] | safe }}</a></h3>
+											<p><span class="icon-time">&nbsp;</span>Reported on {{ post['date'] |formatdate }}</p>
+											<p><span class="icon-exclamation-sign">&nbsp;</span>Severity: {{ post['severity'] }}</p>
+											<p><span class="icon-usd">&nbsp;</span>Value Lost (USD) : {{ post['value_usd'] }}</p>
+											<p>Category: {{ post['category'] }}</p>
 										</div>
+
+										<!-- Post Preview of Incident -->
 										<div class="content no-lightbox">
 											{%- if post['preview'] -%}
 												{{ post['preview']|markdown }}
 											{%- else -%}
 												{{ post['body']|markdown }}
 											{%- endif -%}
+											<a href="{{ url_for('single_post', permalink=post['permalink']) }}">More Details ... </a>
 										</div>
+
+										<!-- Tags -->
 										<div class="infopanel">
 											<div class="tags">
 												<li class="icon-tags" title="tags"></li>
@@ -47,7 +56,10 @@
 							</div>
 						</div>
 					{%- endif -%}
+				
+					<!-- Sidebar, customize sidebar.html to liking -->
 					{%- include 'sidebar.html' -%}
+
 				{%- endblock -%}
 				{% if pagination and pagination.pages > 1 %}
 					<div class="pagination-wrap">
@@ -70,7 +82,7 @@
 		</div>
 		{%- include 'footer.html' -%}
 		{%- block scripts -%}
-			<script src="//codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
+			<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 			{%- block additional_js -%}{%- endblock -%}
 			<script src="{{ url_for('static', filename='js/main.js') }}"></script>
