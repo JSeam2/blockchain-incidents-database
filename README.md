@@ -1,15 +1,15 @@
-# flask-blog
+# Blockchain Incident Database
+## Motivations
+Blockchain is a hot topic lately, and there are security issues associated with the technology. 
+To better understand the risks involved with blockchain, it is helpful to populate a database of incidents to do a risk assessment of the landscape.
+Threat information was structured using the [STIX] (https://stixproject.github.io/) format.
 
-simple blog ~~engine~~ written on [Flask](http://flask.pocoo.org/)
+## Credits
+This web application was based off https://github.com/dmaslov/flask-blog who provided a nice base to develop the project off from.
 
-# Demo:
-you can try it [here](http://flask-blog-demo.herokuapp.com/)
 
-login:demo
-
-pass:demo
-
-# Under the hood:
+# Overview
+## Under the hood:
 - [Python](http://python.org/)
 - [Flask](http://flask.pocoo.org/)
 - [MongoDB](http://www.mongodb.org/)
@@ -20,26 +20,26 @@ pass:demo
 - [Polymer](http://www.polymer-project.org)
 
 
-# What it can:
+## What it can:
 - create/preview/update/delete articles;
 - create/update/delete users;
 - search;
 - atom feed.
 
-# It contains:
+## It contains:
 - WYSIWYG Markdown editor;
 - [AddThis](http://www.addthis.com/) social buttons;
 - [Gravatar](http://gravatar.com) for userpic.
 
 
-# Requirements:
+## Requirements:
 - mongoDB >= 2.2
 
 
 # Installation:
-`git clone https://github.com/dmaslov/flask-blog.git`
+`git clone https://github.com/JSeam2/blockchain-incidents-database`
 
-`cd flask-blog`
+`cd blockchain-incidents-database`
 
 `virtualenv --no-site-packages ./env`
 
