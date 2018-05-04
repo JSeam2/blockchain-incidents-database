@@ -4,8 +4,6 @@ FROM python:3.6
 # Update Container
 RUN apt-get update
 
-COPY ./ /opt/app/
-
 # Set the working directory to /app 
 WORKDIR /app
 
