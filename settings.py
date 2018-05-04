@@ -50,6 +50,7 @@ class Settings:
         userClass = user.User(self.config)
         postClass = post.Post(self.config)
         self.response['error'] = None
+
         try:
             self.config['POSTS_COLLECTION'].ensure_index([('date', -1)])
             self.config['POSTS_COLLECTION'].ensure_index(
