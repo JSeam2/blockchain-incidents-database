@@ -1,22 +1,14 @@
-version: "3"
-  services:
-    web:
-      build: .
-      depends_on:
-        - db
-      deploy:
-        replicas: 5
-        resources:
-          limits:
-            cpus: "0.1"
-            memory: 50M
-      restart_policy:
-        condition: on-failure
-	  ports:
-	    - "80:5000"
+version: "2"
+services:
+  web:
+    build: .
+    command: gunicorn -b :5000 web:app
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    links:
+      - db
 
-    db:
-      image: mongo:3.6.1
-      volumes:
-        - "./data/db:/data/db"
-      command: ["mongod", "-smallfiles"]
+  db:
+    image: mongo:3.6.1

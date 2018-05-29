@@ -23,6 +23,7 @@ md.register_extension(MultilineCodeExtension)
 app.config.from_object('config')
 
 
+
 @app.route('/', defaults={'page': 1})
 @app.route('/page-<int:page>')
 def index(page):

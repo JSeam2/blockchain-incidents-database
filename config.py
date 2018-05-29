@@ -1,7 +1,8 @@
 import pymongo
 import os
 
-CONNECTION_STRING = "mongodb://localhost"  # replace it with your settings
+# replace this with your settings
+CONNECTION_STRING = "mongodb://localhost"
 CONNECTION = pymongo.MongoClient(CONNECTION_STRING)
 
 '''Leave this as is if you dont have other configuration'''
@@ -34,3 +35,8 @@ else:
 LOG_FILE = "app.log"
 
 DEBUG = True  # set it to False on production
+
+if DEBUG == False:
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
+else:
+    PRESERVE_CONTEXT_ON_EXCEPTION = True
