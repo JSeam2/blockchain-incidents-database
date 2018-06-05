@@ -25,25 +25,28 @@ class User:
                     self.username = admin['_id']
                     self.email = admin['email']
                 else:
-                    self.response['error'] = 'Password doesn\'t match..'
+                    self.response['error'] = 'User or Password invalid..'
             else:
-                self.response['error'] = 'User not found..'
+                self.response['error'] = 'User or Password invalid..'
 
         except Exception as e:
             self.print_debug_info(e, self.debug_mode)
             self.response['error'] = 'System error..'
 
-        self.response['data'] = {'username':
-                                 self.username, 'email': self.email}
+        self.response['data'] = {'username': self.username,
+                                 'email': self.email}
         return self.response
+
 
     @staticmethod
     def validate_login(password_hash, password):
         return check_password_hash(password_hash, password)
 
+
     def start_session(self, obj):
         session[self.session_key] = obj
         return True
+
 
     def logout(self):
         if session.pop(self.session_key, None):
@@ -51,19 +54,23 @@ class User:
         else:
             return False
 
+
     def get_users(self):
         self.response['error'] = None
         try:
             users = self.collection.find().sort('date', direction=-1)
             self.response['data'] = []
             for user in users:
+                print(user)
                 self.response['data'].append({'id': user['_id'],
+                                              'super': user['super'],
                                               'email': user['email'],
                                               'date': user['date']})
         except Exception as e:
             self.print_debug_info(e, self.debug_mode)
             self.response['error'] = 'Users not found..'
         return self.response
+
 
     def get_user(self, user_id):
         self.response['error'] = None
@@ -77,12 +84,14 @@ class User:
             self.response['error'] = 'User not found..'
         return self.response
 
+
     @staticmethod
     def get_gravatar_link(email=''):
         gravatar_url = "http://www.gravatar.com/avatar/" + \
-            hashlib.md5(email.lower()).hexdigest() + "?"
-        gravatar_url += urllib.urlencode({'d': 'retro'})
+            hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?"
+        gravatar_url += urllib.parse.urlencode({'d': 'retro'})
         return gravatar_url
+
 
     def delete_user(self, user_id):
         self.response['error'] = None
@@ -93,6 +102,7 @@ class User:
             self.print_debug_info(e, self.debug_mode)
             self.response['error'] = 'Delete user error..'
         return self.response
+
 
     def save_user(self, user_data):
         self.response['error'] = None
@@ -110,11 +120,16 @@ class User:
                                 password_hash = generate_password_hash(
                                     user_data['new_pass'], method='pbkdf2:sha256')
                                 record = {'password': password_hash,
-                                          'email': user_data['email']}
+                                          'email': user_data['email'],
+                                          'super': user_data['super']}
                                 try:
                                     self.collection.update(
-                                        {'_id': user_data['_id']}, {'$set': record}, upsert=False, multi=False)
+                                        {'_id': user_data['_id']},
+                                        {'$set': record},
+                                        upsert=False,
+                                        multi=False)
                                     self.response['data'] = True
+
                                 except Exception as e:
                                     self.print_debug_info(e, self.debug_mode)
                                     self.response[
@@ -130,8 +145,13 @@ class User:
                     else:
                         try:
                             self.collection.update(
-                                {'_id': user_data['_id']}, {'$set': {'email': user_data['email']}}, upsert=False, multi=False)
+                                {'_id': user_data['_id']},
+                                {'$set': {'email': user_data['email'],
+                                          'super': user_data['super']}
+                                },
+                                 upsert=False, multi=False)
                             self.response['data'] = True
+
                         except Exception as e:
                             self.print_debug_info(e, self.debug_mode)
                             self.response['error'] = 'Update user error..'
@@ -143,17 +163,26 @@ class User:
                     self.response['error'] = 'Username already exists..'
                     return self.response
                 else:
-                    if user_data['new_pass'] and user_data['new_pass'] == user_data['new_pass_again']:
+                    if user_data['new_pass'] and\
+                       user_data['new_pass'] == user_data['new_pass_again']:
                         password_hash = generate_password_hash(
-                            user_data['new_pass'], method='pbkdf2:sha256')
-                        record = {'_id': user_data['_id'], 'password': password_hash, 'email': user_data[
-                            'email'], 'date': datetime.datetime.utcnow()}
+                            user_data['new_pass'],
+                            method='pbkdf2:sha256')
+ 
+                        record = {'_id': user_data['_id'],
+                                  'password': password_hash,
+                                  'email': user_data['email'],
+                                  'super': user_data['super'],
+                                  'date': datetime.datetime.utcnow()}
+
                         try:
                             self.collection.insert(record)
                             self.response['data'] = True
+
                         except Exception as e:
                             self.print_debug_info(e, self.debug_mode)
                             self.response['error'] = 'Create user error..'
+
                     else:
                         self.response[
                             'error'] = 'Password cannot be blank and must be the same..'
@@ -161,6 +190,7 @@ class User:
         else:
             self.response['error'] = 'Error..'
         return self.response
+
 
     @staticmethod
     def print_debug_info(msg, show=False):

@@ -274,14 +274,20 @@ def save_user():
         'old_pass': request.form.get('user-old-password', None),
         'new_pass': request.form.get('user-new-password', None),
         'new_pass_again': request.form.get('user-new-password-again', None),
+        'super': request.form.get('user-super', False) == "True" or\
+            request.form.get('user-super', False) == "true",
         'update': request.form.get('user-update', False)
     }
+
+    print(post_data)
+
     if not post_data['email'] or not post_data['_id']:
         flash('Username and Email are required..', 'error')
         if post_data['update']:
                 return redirect(url_for('edit_user', id=post_data['_id']))
         else:
             return redirect(url_for('add_user'))
+
     else:
         user = userClass.save_user(post_data)
         if user['error']:
@@ -293,6 +299,7 @@ def save_user():
         else:
             message = 'User updated!' if post_data['update'] else 'User added!'
             flash(message, 'success')
+
     return redirect(url_for('edit_user', id=post_data['_id']))
 
 
@@ -357,6 +364,7 @@ def install():
         user_data = {
             '_id': request.form.get('user-id', None).lower().strip(),
             'email': request.form.get('user-email', None),
+            'super': True,
             'new_pass': request.form.get('user-new-password', None),
             'new_pass_again': request.form.get('user-new-password-again', None),
             'update': False

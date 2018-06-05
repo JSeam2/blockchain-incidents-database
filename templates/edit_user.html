@@ -36,6 +36,7 @@
 									    <input type="email" class="form-control" name="user-email" id="user-email" placeholder="Email" value="{{ user['email'] }}" required autocomplete="off">
 									</div>
 								</fieldset>
+
 								<fieldset>
 								<legend>Password section</legend>
 									<div class="form-group {% if error and error_type == 'validate' %}has-error{% endif %}">
@@ -56,6 +57,12 @@
 										{%- endif -%}
 									    <input type="password" class="form-control" name="user-new-password-again" id="user-new-password-again" placeholder="New Password Repeat" autocomplete="off">
 									</div>
+								</fieldset>
+
+								<fieldset>
+								<legend>Superuser Input False or True </legend>
+								<div class="form-group">
+									<input type="text" name="user-super" id="user-super" value="{{ user['super'] }}" />
 								</fieldset>
 								<div class="form-group">
 									<input name="user-id" type="hidden" value="{{ user['_id'] }}">

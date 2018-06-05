@@ -36,7 +36,3 @@ LOG_FILE = "app.log"
 
 DEBUG = True  # set it to False on production
 
-if DEBUG == False:
-    PRESERVE_CONTEXT_ON_EXCEPTION = False
-else:
-    PRESERVE_CONTEXT_ON_EXCEPTION = True
