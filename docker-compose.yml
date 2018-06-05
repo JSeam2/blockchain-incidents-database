@@ -1,14 +1,17 @@
-version: "2"
-services:
-  web:
-    build: .
-    command: gunicorn -b :5000 web:app
-    ports:
-      - "5000:5000"
-    volumes:
-      - .:/app
-    links:
-      - db
+web:
+  build: .
+  #command: gunicorn -b :5000 web:app
+  command: python web.py
+  ports:
+    - "5000:5000"
+  volumes:
+    - .:/app
+  links:
+    - db
 
-  db:
-    image: mongo:3.6.1
+db:
+  image: mongo:3.6.1
+  environment:
+    - MONGO_INITDB_ROOT_USERNAME=admin
+    - MONGO_INITDB_ROOT_PASSWORD=tochange
+  restart: on-failure
