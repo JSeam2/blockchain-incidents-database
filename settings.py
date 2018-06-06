@@ -33,10 +33,8 @@ class Settings:
             self.response['error'] = 'System error..'
 
     def is_installed(self):
-        posts_cnt = self.config['POSTS_COLLECTION'].find().count()
         users_cnt = self.config['USERS_COLLECTION'].find().count()
-        configs_cnt = self.config['SETTINGS_COLLECTION'].find().count()
-        if posts_cnt and users_cnt and configs_cnt:
+        if users_cnt > 0:
             session['installed'] = True
             return True
         else:
@@ -46,6 +44,8 @@ class Settings:
     def install(self, blog_data, user_data):
         import user
         import post
+
+        print("Installing")
 
         userClass = user.User(self.config)
         postClass = post.Post(self.config)

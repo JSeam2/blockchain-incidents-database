@@ -23,11 +23,10 @@ md.register_extension(MultilineCodeExtension)
 app.config.from_object('config')
 
 
-
 @app.route('/', defaults={'page': 1})
 @app.route('/page-<int:page>')
 def index(page):
-    print(session.get('user')['super'])
+    print(session)
     skip = (page - 1) * int(app.config['PER_PAGE'])
     posts = postClass.get_posts(int(app.config['PER_PAGE']), skip)
     count = postClass.get_total_count()
@@ -352,7 +351,6 @@ def blog_settings():
                            error=error,
                            error_type=error_type)
 
-
 @app.route('/install', methods=['GET', 'POST'])
 def install():
     if session.get('installed', None):
@@ -367,9 +365,9 @@ def install():
         user_data = {
             '_id': request.form.get('user-id', None).lower().strip(),
             'email': request.form.get('user-email', None),
-            'super': True,
             'new_pass': request.form.get('user-new-password', None),
             'new_pass_again': request.form.get('user-new-password-again', None),
+            'super': True,
             'update': False
         }
         blog_data = {
@@ -431,10 +429,10 @@ def csrf_protect():
 def is_installed():
     app.config = settingsClass.get_config()
     app.jinja_env.globals['meta_description'] = app.config['BLOG_DESCRIPTION']
-    if not session.get('installed', None):
+    if not settingsClass.is_installed():
+        session['installed'] = False
         if url_for('static', filename='') not in request.path and request.path != url_for('install'):
-            if not settingsClass.is_installed():
-                return redirect(url_for('install'))
+            return redirect(url_for('install'))
 
 
 @app.before_request
