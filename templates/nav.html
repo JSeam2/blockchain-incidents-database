@@ -18,7 +18,9 @@
 			<li><a href="{{ url_for('users_list') }}">Users</a></li>
 			<li><a href="{{ url_for('posts') }}">Incident List</a></li>
 			<li><a href="{{ url_for('new_post') }}">New Incident</a></li>
+      {% if session['user']['super'] %}
 			<li><a href="{{ url_for('blog_settings') }}">Settings</a></li>
+      {% endif %}
 			<li><a href="{{ url_for('logout') }}">Logout</a></li>
 		{% endif %}
 			<li><a href="{{ url_for('recent_feed') }}" class="icon-rss"></a></li>

@@ -2,13 +2,13 @@ import pymongo
 import os
 
 # Settings for local dev
-#CONNECTION = pymongo.MongoClient("mongodb://localhost")
+CONNECTION = pymongo.MongoClient("mongodb://localhost")
 # Settings for Docker
-CONNECTION = pymongo.MongoClient(host = os.environ['DB_PORT_27017_TCP_ADDR'],
-                                 port = 27017,
-                                 username = "admin",
-                                 password = "tochange")
-
+#CONNECTION = pymongo.MongoClient(host = os.environ['DB_PORT_27017_TCP_ADDR'],
+#                                 port = 27017,
+#                                 username = "admin",
+#                                 password = "tochange")
+#
 '''Leave this as is if you dont have other configuration'''
 DATABASE = CONNECTION.blog
 POSTS_COLLECTION = DATABASE.posts

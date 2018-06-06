@@ -12,6 +12,7 @@ class User:
         self.collection = default_config['USERS_COLLECTION']
         self.username = None
         self.email = None
+        self.super = None
         self.session_key = 'user'
         self.response = {'error': None, 'data': None}
         self.debug_mode = default_config['DEBUG']
@@ -19,11 +20,12 @@ class User:
     def login(self, username, password):
         self.response['error'] = None
         try:
-            admin = self.collection.find_one({'_id': username})
-            if admin:
-                if self.validate_login(admin['password'], password):
-                    self.username = admin['_id']
-                    self.email = admin['email']
+            user_session = self.collection.find_one({'_id': username})
+            if user_session:
+                if self.validate_login(user_session['password'], password):
+                    self.username = user_session['_id']
+                    self.email = user_session['email']
+                    self.super = user_session['super']
                 else:
                     self.response['error'] = 'User or Password invalid..'
             else:
@@ -34,7 +36,8 @@ class User:
             self.response['error'] = 'System error..'
 
         self.response['data'] = {'username': self.username,
-                                 'email': self.email}
+                                 'email': self.email,
+                                 'super': self.super}
         return self.response
 
 

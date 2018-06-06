@@ -49,3 +49,13 @@ def login_required():
             return f(*args, **kwargs)
         return wrapped
     return wrapper
+
+def superuser():
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if not session.get('user')['super']:
+                return redirect(url_for('index'))
+            return f(*args, **kwargs)
+        return wrapped
+    return wrapper

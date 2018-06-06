@@ -27,6 +27,7 @@ app.config.from_object('config')
 @app.route('/', defaults={'page': 1})
 @app.route('/page-<int:page>')
 def index(page):
+    print(session.get('user')['super'])
     skip = (page - 1) * int(app.config['PER_PAGE'])
     posts = postClass.get_posts(int(app.config['PER_PAGE']), skip)
     count = postClass.get_total_count()
@@ -105,11 +106,9 @@ def new_post():
             post = postClass.validate_post_data(post_data)
             if request.form.get('post-preview') == '1':
                 session['post-preview'] = post
-                session[
-                    'post-preview']['action'] = 'edit' if request.form.get('post-id') else 'add'
+                session['post-preview']['action'] = 'edit' if request.form.get('post-id') else 'add'
                 if request.form.get('post-id'):
-                    session[
-                        'post-preview']['redirect'] = url_for('post_edit', id=request.form.get('post-id'))
+                    session['post-preview']['redirect'] = url_for('post_edit', id=request.form.get('post-id'))
                 else:
                     session['post-preview']['redirect'] = url_for('new_post')
                 return redirect(url_for('post_preview'))
@@ -241,6 +240,7 @@ def users_list():
 
 @app.route('/add_user')
 @login_required()
+@superuser()
 def add_user():
     gravatar_url = userClass.get_gravatar_link()
     return render_template('add_user.html', gravatar_url=gravatar_url, meta_title='Add user')
@@ -255,6 +255,7 @@ def edit_user(id):
 
 @app.route('/delete_user?id=<id>')
 @login_required()
+@superuser()
 def delete_user(id):
     if id != session['user']['username']:
         user = userClass.delete_user(id)
@@ -267,6 +268,7 @@ def delete_user(id):
 
 @app.route('/save_user', methods=['POST'])
 @login_required()
+@superuser()
 def save_user():
     post_data = {
         '_id': request.form.get('user-id', None).lower().strip(),
@@ -320,6 +322,7 @@ def recent_feed():
 
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required()
+@superuser()
 def blog_settings():
     error = None
     error_type = 'validate'
