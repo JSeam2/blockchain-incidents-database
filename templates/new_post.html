@@ -31,156 +31,109 @@
 					{%- endwith -%}
 					<form id="post-form" role="form" method="post" action="{{ url_for('new_post') }}">
 						
+						<h3>Basic STIX Fields</h3>
+						<br>
+						<!-- Overview Of Basic Fields -->
+
 						<!-- Title -->
-						<label for="post-title">Incident Overview</label><br>
+						<!-- Description -->
+						<!-- Blockchain platform -->  
+						<!-- Attack Vector -->
+						<!-- Vulnerability Exploited -->
+						<!-- Time of Attack -->
+						<!-- Time reported -->
+						<!-- Loss (Crypto) @ time of attack -->
+						<!-- Loss (USD) @ time of attack -->
+						<!-- Geographical origin of attack, Source of attack -->
+						<!-- Resources -->
+						
+
+						<!-- Title -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
 								<label class="control-label" for="post-title">Required field</label>
 							{%- endif -%}
-						    <input type="text" class="form-control" name="post-title" id="post-title" placeholder="Incident Title" value="{{ post_title | safe }}" required>
+								<label>Title</label>
+						    <input type="text" class="form-control" name="post-title" id="post-title" placeholder="Title" value="{{ post_title | safe }}" required>
 						</div>
 
-						<!-- Short Description -->
-						<div class="form-group">
-						    <textarea id="post-short" name="post-short" class="form-control" rows="3" placeholder="Short Description">{{ post_preview | safe }}</textarea>
-						</div>
-
-						<!-- Long Description -->
+						<!-- Description -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
 								<label class="control-label" for="post-full">Required field</label>
 							{%- endif -%}
-						    <textarea id="post-full" name="post-full" class="form-control" rows="7" placeholder="Full Description" required>{{ post_body | safe }}</textarea>
+								<label>Description</label>
+						    <textarea id="post-full" name="post-full" class="form-control" rows="7" placeholder="Description" required>{{ post_body | safe }}</textarea>
 						</div>
 
-						<!-- Category -->
+						<!-- Blockchain platform -->
 						<div class="form-group">
-							<input type="text" id="category" name="category" class="form-control" placeholder="Category"></textarea>
+							<label>Blockchain Platform</label>
+							<input type="text" id="blockchain-platform" name="post-blockchain-platform" placeholder="Blockchain Platform" class="form-control">
 						</div>
 
-						<!-- Reporter -->
+						<!-- Attack Vector -->
 						<div class="form-group">
-							<input type="text" id="reporter" name="reporter" class="form-control" placeholder="Name of Reporter"></textarea>
+							<label>Attack Vector</label>
+							<input type="text" name="post-attack-vector" id="post-attack-vector" placeholder="Attack Vector" class="form-control"/>
+						</div>
+
+						<!-- Vulnerability Exploited -->
+						<div class="form-group">
+							<label>Vulnerability Exploited</label>
+							<input type="text" name="post-vulnerability-exploited" id="post-vulnerability-exploited" placeholder="Vulnerability Exploited" class="form-control"/>
+						</div>
+
+						<!-- Loss (Crypto) @ time of attack -->
+						<div class="form-group">
+							<label>Loss (Crypto) @ Time of Attack</label>
+							<input type="text" name="post-loss-crypto" id="post-loss-crypto" placeholder="Loss (Crypto) @ Time of Attack" class="form-control"/>
+						</div>
+
+						<!-- Loss (USD) @ time of attack -->
+						<div class="form-group">
+							<label>Loss (USD) @ Time of Attack</label>
+							<input type="text" name="post-loss-usd" id="post-loss-usd" placeholder="Loss (USD) @ Time of Attack" class="form-control"/>
+						</div>
+
+						<!-- Geographical origin of attack, Source of attack -->
+						<div class="form-group">
+							<label>Geographical origin of attack, Source of Attack</label>
+							<input type="text" name="post-source-of-attack" id="post-source-of-attack" placeholder="Geographical origin of attack, Source of attack" class="form-control"/> 
+							
+						</div>
+
+						<!-- Resources -->
+						<div class="form-group">
+							<label>Resources</label>
+							<input type="text" name="post-resources" id="post-resources" placeholder="Resources" class="form-control" />
+						</div>
+
+						<div class="form-group">
+							<!-- Time of Attack -->
+							<label>Time of Attack</label>
+							<input type="datetime-local" name="post-time-of-attack" id="post-time-of-attack" placeholder="Time of Attack" class="form-control"/>
+
+							<!-- Time reported -->
+							<label>Time Reported</label>
+							<input type="datetime-local" name="post-time-reported" id="post-time-reported" class="form-control"/>
 						</div>
 
 						<br>
 						<hr>
 
-						<!-- Incident Reported -->
-						<div class="form-group">
-							<label for="reported-time">Incident Reported</label>
-							<input type="datetime-local" id="reported-time" name="reported-time" class="form-control">
-						</div>
-
-						<!-- Incident Discovery -->
-						<div class="form-group">
-							<label for="discovery-time">Incident Discovery</label>
-							<input type="datetime-local" id="discovery-time" name="discovery-time" class="form-control">
-						</div>
+						<h3>Advanced Stix Fields</h3>
+						<!-- TODO -->
 
 						<br>
 						<hr>
 
-						<!-- Victim -->
-						<div class="form-group">
-							<label for="victim">Victim</label>
-							<input type="text" id="victim" name="victim" class="form-control">
-						</div>
-
-						<!-- Assets -->
-						<div class="form-group">
-							<label for="affected-assets">Affected Assets</label>
-							<input type="text" id="affected-assets" name="affected-assets" class="form-control">
-						</div>
-
-						<!-- Loss (USD) -->
-						<div class="form-group">
-							<label for="loss-usd">Loss Estimation (USD)</label>
-							<input type="text" id="loss-usd" name="loss-usd" class="form-control">
-						</div>
-
-						<!-- Loss (Crypto) -->
-						<div class="form-group">
-							<label for="loss-crypto">Loss Estimation (Crypto)</label>
-							<input type="text" id="loss-crypto" name="loss-crypto" class="form-control">
-						</div>
-
+						<h3>Website Metadata</h3>
 						<br>
-						<hr>
-
-						<!-- Security Compromise Name -->
-						<div class="form-group">
-							<label for="security-compromise-name">Security Compromise Name</label>
-							<input type="text" id="security-compromise-name" name="security-compromise-name" class="form-control">
-						</div>
-
-						<!-- Threat Actor --> 
-						<div class="form-group">
-							<label for="threat-actor">Threat Actor</label>
-							<input type="text" id="threat-actor" name="threat-actor" class="form-control">
-						</div>
-
-						<!-- Leveraged TTP Resource Infrastructure -->
-						<div class="form-group">
-							<label for="leveraged-ttp">Leveraged TTP Resource Infrastructure</label>
-							<input type="text" id="leveraged-ttp" name="leveraged-ttp" class="form-control">
-						</div>
-
-						<!-- Intended Effect -->
-						<div class="form-group">
-							<label for="intended-effect">Intended Effect Description</label>
-							<input type="text" id="intended-effect" name="intended-effect" class="form-control">
-						</div>
-
-						<!-- Discovery Method -->
-						<div class="form-group">
-							<label for="discovery-method">Discovery Method</label>
-							<input type="text" id="discovery-method" name="discovery-method" class="form-control">
-						</div>
-
-						<!-- Course Of Action Requested-->
-						<div class="form-group">
-							<label for="coa-requested">Course Of Action Requested</label>
-							<input type="text" id="coa-requested" name="coa-requested" class="form-control">
-						</div>
-
-						<!-- Course Of Action Taken-->
-						<div class="form-group">
-							<label for="coa-taken">Course Of Action Taken</label>
-							<input type="text" id="coa-taken" name="coa-taken" class="form-control">
-						</div>
-
-						<!-- Severity -->
-						<div class="form-group">
-							<label for="severity">Severity</label><br>
-							<input type="radio" name="severity" id="severity" value="Low" checked> Low &nbsp;
-							<input type="radio" name="severity" id="severity" value="Medium">	Medium &nbsp; 
-							<input type="radio" name="severity" id="severity" value="High">	High &nbsp; 
-						</div>
-
-						<br>
-						<hr>
-						<!-- Information Source Description -->
-						<div class="form-group">
-							<label for="info-source">Information Source Description</label>
-							<input type="text" id="info-source" name="info-source" class="form-control">
-						</div>
-
-						<!-- Confidence -->
-						<div class="form-group">
-							<label for="confidence">Confidence of Incident</label><br>
-							<input type="radio" name="confidence" id="confidence" value="Low" checked> Low &nbsp;
-							<input type="radio" name="confidence" id="confidence" value="Medium">	Medium  &nbsp;
-							<input type="radio" name="confidence" id="confidence" value="High">	High &nbsp;
-						</div>
-
-						<br>
-						<hr>
-
 						<!-- Tags -->
 						<div class="form-group">
 						    <label for="post-tags">Tags</label>
-						    <input type="text" name="post-tags" class="form-control" id="post-tags" placeholder="Comma Separated (eg. Bird, Train)" value="{{ ','.join(post_tags) }}">
+						    <input type="text" name="post-tags" class="form-control" id="post-tags" placeholder="Input comma separated tags (eg. Bird, Train) for searches" value="{{ ','.join(post_tags) }}">
 						</div>
 
 
@@ -199,49 +152,8 @@
 		</div>
 	</div>
 {%- endblock -%}
-{%- block scripts -%}
-	<script src="//codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-	<script src="{{ url_for('static', filename='js/a-tools.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/showdown.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/mdmagick.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-	<script>
-		// Function found here: https://gist.github.com/ryanburnette/8803238
-		// Function to add default current time to date-time
-		$.fn.setNow = function (onlyBlank) {
-			var now = new Date($.now())
-				, year
-				, month
-				, date
-				, hours
-				, minutes
-				, seconds
-				, formattedDateTime
-				;
-
-			year = now.getFullYear();
-			month = now.getMonth().toString().length === 1 ? '0' + (now.getMonth() + 1).toString() : now.getMonth() + 1;
-			date = now.getDate().toString().length === 1 ? '0' + (now.getDate()).toString() : now.getDate();
-			hours = now.getHours().toString().length === 1 ? '0' + now.getHours().toString() : now.getHours();
-			minutes = now.getMinutes().toString().length === 1 ? '0' + now.getMinutes().toString() : now.getMinutes();
-			seconds = now.getSeconds().toString().length === 1 ? '0' + now.getSeconds().toString() : now.getSeconds();
-
-			formattedDateTime = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds;
-
-			if ( onlyBlank === true && $(this).val() ) {
-				return this;
-			}
-
-			$(this).val(formattedDateTime);
-
-			return this;
-		}
-
-		$(function () {
-				// Handler for .ready() called.
-				$('input[type="datetime"]').setNow();
-				$('input[type="datetime-local"]').setNow();
-		});
-	</script>
-{%- endblock -%}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+</script>
