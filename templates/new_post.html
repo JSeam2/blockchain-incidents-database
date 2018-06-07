@@ -132,7 +132,9 @@
 						<br>
 						<!-- Tags -->
 						<div class="form-group">
-						    <label for="post-tags">Tags</label>
+							<label for="post-tags">Tags &nbsp;
+								<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="bottom" data-content="The site uses tags to search for incidents this is not included in STIX fields"></span>
+							</label>
 						    <input type="text" name="post-tags" class="form-control" id="post-tags" placeholder="Input comma separated tags (eg. Bird, Train) for searches" value="{{ ','.join(post_tags) }}">
 						</div>
 
@@ -152,8 +154,20 @@
 		</div>
 	</div>
 {%- endblock -%}
-<script type="text/javascript">
-$(document).ready(function(){
+
+{%- block scripts -%}
+	<script type="text/javascript">
+	$(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
-});
-</script>
+	});
+
+	$('html').on('mouseup', function(e) {
+    if(!$(e.target).closest('.popover').length) {
+			$('.popover').each(function(){
+				$(this.previousSibling).popover('hide');
+			});
+    }
+	});
+
+	</script>
+{%- endblock -%}
