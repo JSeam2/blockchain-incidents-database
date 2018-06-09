@@ -2,7 +2,7 @@
 ## Motivations
 Blockchain is a hot topic lately, and there are security issues associated with the technology. 
 To better understand the risks involved with blockchain, it is helpful to populate a database of incidents to do a risk assessment of the landscape.
-Threat information was structured using the [STIX] (https://stixproject.github.io/) format.
+Threat information was structured using the [STIX](https://stixproject.github.io/) format.
 
 ## Credits
 This web application was based off https://github.com/dmaslov/flask-blog who provided a nice base to develop the project off from.
