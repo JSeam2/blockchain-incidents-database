@@ -60,62 +60,82 @@
 						<!-- Description -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
-								<label class="control-label" for="post-full">Required field</label>
+								<label class="control-label" for="post-description">Required field</label>
 							{%- endif -%}
 								<label>Description</label>
-						    <textarea id="post-full" name="post-full" class="form-control" rows="7" placeholder="Description" required>{{ post_body | safe }}</textarea>
+						    <textarea id="post-description" name="post-description" class="form-control" rows="7" placeholder="Description" required>{{ post_body | safe }}</textarea>
 						</div>
 
 						<!-- Blockchain platform -->
 						<div class="form-group">
 							<label>Blockchain Platform</label>
-							<input type="text" id="blockchain-platform" name="post-blockchain-platform" placeholder="Blockchain Platform" class="form-control">
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="Blockchain platforms or cryptocurrencies (ETH, LTC) the attack is associated with"></span>
+							<input type="text" id="post-blockchain-platform" name="post-blockchain-platform" placeholder="Blockchain Platform" class="form-control">
 						</div>
 
 						<!-- Attack Vector -->
 						<div class="form-group">
 							<label>Attack Vector</label>
+								&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="Route which attack is carried out, eg. Internet, client application (wallet), server, humans"></span>
 							<input type="text" name="post-attack-vector" id="post-attack-vector" placeholder="Attack Vector" class="form-control"/>
 						</div>
 
 						<!-- Vulnerability Exploited -->
 						<div class="form-group">
 							<label>Vulnerability Exploited</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="What type of vulnerabilities was the attack associated with"></span>
 							<input type="text" name="post-vulnerability-exploited" id="post-vulnerability-exploited" placeholder="Vulnerability Exploited" class="form-control"/>
 						</div>
 
 						<!-- Loss (Crypto) @ time of attack -->
 						<div class="form-group">
 							<label>Loss (Crypto) @ Time of Attack</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="Utilize standard crypto ticker eg. 100 BTC"></span>
 							<input type="text" name="post-loss-crypto" id="post-loss-crypto" placeholder="Loss (Crypto) @ Time of Attack" class="form-control"/>
 						</div>
 
 						<!-- Loss (USD) @ time of attack -->
 						<div class="form-group">
 							<label>Loss (USD) @ Time of Attack</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="Take USD price from multiple charts"></span>
 							<input type="text" name="post-loss-usd" id="post-loss-usd" placeholder="Loss (USD) @ Time of Attack" class="form-control"/>
 						</div>
 
 						<!-- Geographical origin of attack, Source of attack -->
 						<div class="form-group">
 							<label>Geographical origin of attack, Source of Attack</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="Nationality / origin of smart contract uploading IP"></span>
 							<input type="text" name="post-source-of-attack" id="post-source-of-attack" placeholder="Geographical origin of attack, Source of attack" class="form-control"/> 
-							
 						</div>
 
 						<!-- Resources -->
 						<div class="form-group">
 							<label>Resources</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="References and links to article"></span>
 							<input type="text" name="post-resources" id="post-resources" placeholder="Resources" class="form-control" />
 						</div>
 
+						<!-- Time of Attack -->
 						<div class="form-group">
-							<!-- Time of Attack -->
 							<label>Time of Attack</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="Transaction in blockchain"></span>
 							<input type="datetime-local" name="post-time-of-attack" id="post-time-of-attack" placeholder="Time of Attack" class="form-control"/>
 
-							<!-- Time reported -->
+						</div>
+
+						<!-- Time reported -->
+						<div class="form-group">
 							<label>Time Reported</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="right" data-content="Reported Time"></span>
 							<input type="datetime-local" name="post-time-reported" id="post-time-reported" class="form-control"/>
 						</div>
 
@@ -132,7 +152,8 @@
 						<br>
 						<!-- Tags -->
 						<div class="form-group">
-							<label for="post-tags">Tags &nbsp;
+							<label for="post-tags">Tags 
+								&nbsp;
 								<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="bottom" data-content="The site uses tags to search for incidents this is not included in STIX fields"></span>
 							</label>
 						    <input type="text" name="post-tags" class="form-control" id="post-tags" placeholder="Input comma separated tags (eg. Bird, Train) for searches" value="{{ ','.join(post_tags) }}">

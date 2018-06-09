@@ -81,28 +81,76 @@ def search():
         return redirect(url_for('index'))
 
 
-#TODO add additional fields
 @app.route('/newpost', methods=['GET', 'POST'])
 @login_required()
 def new_post():
+    """
+    Stores the post data from /newpost into MongoDB
+
+    Fields used (this should be self-explanatory):
+        post-title
+        post-description
+        post-blockchain-platform
+        post-attack-vector
+        post-vulnerability-exploited
+        post-loss-crypto
+        post-loss-usd
+        post-source-of-attack
+        post-resources
+        post-time-of-attack
+        post-time-reported
+    """
     error = False
     error_type = 'validate'
     if request.method == 'POST':
         post_title = request.form.get('post-title').strip()
-        post_full = request.form.get('post-full')
+        post_description = request.form.get('post-description')
 
         if not post_title or not post_full:
             error = True
+
         else:
             tags = cgi.escape(request.form.get('post-tags'))
             tags_array = extract_tags(tags)
+
+            # Data dictionary to input into MongoDB 
             post_data = {'title': post_title,
-                         'preview': request.form.get('post-short'),
-                         'body': post_full,
+
+                         'description': post_description,
+
+                         'blockchain-platform': \
+                            request.form.get('post-blockchain-platform').strip(),
+
+                         'attack-vector': \
+                            request.form.get('post-attack-vector').strip(),
+
+                         'vulnerability-exploited': \
+                            request.form.get('post-vulnerability-exploited').strip(),
+
+                         'loss-crypto': \
+                            request.form.get('post-loss-crypto').strip(),
+
+                         'loss-usd': \
+                            request.form.get('post-loss-usd').strip(),
+
+                         'source-of-attack': \
+                            request.form.get('post-source-of-attack').strip(),
+
+                         'resources': \
+                            request.form.get('post-resources').strip(),
+
+                         'time-of-attack': \
+                            request.form.get('post-time-of-attack').strip(),
+
+                         'time-reported': \
+                            request.form.get('post-time-reported').strip(),
+
                          'tags': tags_array,
+
                          'author': session['user']['username']}
 
             post = postClass.validate_post_data(post_data)
+
             if request.form.get('post-preview') == '1':
                 session['post-preview'] = post
                 session['post-preview']['action'] = 'edit' if request.form.get('post-id') else 'add'
@@ -182,14 +230,11 @@ def post_edit(id):
 @app.route('/post_delete?id=<id>')
 @login_required()
 def post_del(id):
-    if postClass.get_total_count() > 1:
-        response = postClass.delete_post(id)
-        if response['data'] is True:
-            flash('Post removed!', 'success')
-        else:
-            flash(response['error'], 'error')
+    response = postClass.delete_post(id)
+    if response['data'] is True:
+        flash('Post removed!', 'success')
     else:
-        flash('Need to be at least one post..', 'error')
+        flash(response['error'], 'error')
 
     return redirect(url_for('posts'))
 

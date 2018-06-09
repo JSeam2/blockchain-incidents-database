@@ -146,15 +146,74 @@ class Post:
 
     @staticmethod
     def validate_post_data(post_data):
-        permalink = random_string(12)
-        #exp = re.compile('\W')
-        #whitespace = re.compile('\s')
-        #temp_title = whitespace.sub("_", post_data['title'])
-        #permalink = exp.sub('', temp_title)
+        """
+        Validates post data by converting &, <, > into
+        HTML safe sequences. Appends permalink to the post_data
 
-        post_data['title'] = cgi.escape(post_data['title'])
-        post_data['preview'] = cgi.escape(post_data['preview'], quote=True)
-        post_data['body'] = cgi.escape(post_data['body'], quote=True)
+        :param post_data:
+            Dictionary of post data consists of the following string keys
+            'title'
+            'description'
+            'blockchain-platform'
+            'attack-vector'
+            'vulnerability-exploited'
+            'loss-crypto'
+            'loss-usd'
+            'source-of-attack'
+            'resources'
+            'time-of-attack'
+            'time-reported'
+            'tags'
+            'author'
+
+        :type post_data: dictionary
+
+        :return: post_data with escaped fields + permalink + date
+        :rtype: dictionary
+        """
+        # 26 ascii_uppercase + 10 digit
+        # 12 characters 
+        # 4.7383813e+18 possible combinations 
+        # Quite unlikely for a collision to happen
+        permalink = random_string(12)
+
+
+        # Escape user input fields
+        post_data['title'] = \
+            cgi.escape(post_data['title'])
+
+        post_data['description'] = \
+                cgi.escape(post_data['description'], quote=True)
+
+        post_data['blockchain-platform'] = \
+            cgi.escape(post_data['blockchain-platform'])
+
+        post_data['attack-vector'] = \
+            cgi.escape(post_data['attack-vector'])
+
+        post_data['vulnerability-exploited'] = \
+            cgi.escape(post_data['vulnerability-exploited'])
+
+        post_data['loss-crypto'] = \
+            cgi.escape(post_data['loss-crypto'])
+
+        post_data['loss-usd'] = \
+            cgi.escape(post_data['loss-usd'])
+
+        post_data['source-of-attack'] = \
+            cgi.escape(post_data['source-of-attack'])
+
+        post_data['resources'] = \
+            cgi.escape(post_data['resources'])
+
+        #TODO convert the string field to date object
+        post_data['time-of-attack'] = \
+            cgi.escape(post_data['time-of-attack'])
+
+        post_data['time-reported'] = \
+            cgi.escape(post_data['time-reported'])
+
+        # append to to post_data
         post_data['date'] = datetime.datetime.utcnow()
         post_data['permalink'] = permalink
 
