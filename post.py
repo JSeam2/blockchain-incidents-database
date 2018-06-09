@@ -19,8 +19,7 @@ class Post:
         elif search is not None:
             cond = {'$or': [
                     {'title': {'$regex': search, '$options': 'i'}},
-                    {'body': {'$regex': search, '$options': 'i'}},
-                    {'preview': {'$regex': search, '$options': 'i'}}]}
+                    {'description': {'$regex': search, '$options': 'i'}}]}
         try:
             cursor = self.collection.find(cond).sort(
                 'date', direction=-1).skip(skip).limit(limit)
@@ -30,13 +29,38 @@ class Post:
                     post['tags'] = []
                 if 'comments' not in post:
                     post['comments'] = []
-                if 'preview' not in post:
-                    post['preview'] = ''
 
                 self.response['data'].append({'id': post['_id'],
                                               'title': post['title'],
-                                              'body': post['body'],
-                                              'preview': post['preview'],
+                                              'description': post['description'],
+
+                                              'blockchain-platform': \
+                                                post['blockchain-platform'],
+
+                                              'attack-vector': \
+                                                post['attack-vector'],
+
+                                              'vulnerability-exploited': \
+                                                post['vulnerability-exploited'],
+
+                                              'loss-crypto': \
+                                                post['loss-crypto'],
+
+                                              'loss-usd': \
+                                                post['loss-usd'],
+
+                                              'source-of-attack': \
+                                                post['source-of-attack'],
+
+                                              'resources': \
+                                                post['resources'],
+
+                                              'time-of-attack': \
+                                                post['time-of-attack'],
+
+                                              'time-reported': \
+                                                post['time-reported'],
+
                                               'date': post['date'],
                                               'permalink': post['permalink'],
                                               'tags': post['tags'],
@@ -70,8 +94,6 @@ class Post:
                 else:
                     self.response['data']['tags'] = ','.join(
                         self.response['data']['tags'])
-                if 'preview' not in self.response['data']:
-                    self.response['data']['preview'] = ''
         except Exception as e:
             self.print_debug_info(e, self.debug_mode)
             self.response['error'] = 'Post not found..'
@@ -85,8 +107,7 @@ class Post:
         elif search is not None:
             cond = {'$or': [
                     {'title': {'$regex': search, '$options': 'i'}},
-                    {'body': {'$regex': search, '$options': 'i'}},
-                    {'preview': {'$regex': search, '$options': 'i'}}]}
+                    {'description': {'$regex': search, '$options': 'i'}}]}
 
         return self.collection.find(cond).count()
 
@@ -118,6 +139,7 @@ class Post:
 
     def edit_post(self, post_id, post_data):
         self.response['error'] = None
+
         del post_data['date']
         del post_data['permalink']
 
@@ -125,6 +147,7 @@ class Post:
             self.collection.update(
                 {'_id': ObjectId(post_id)}, {"$set": post_data}, upsert=False)
             self.response['data'] = True
+
         except Exception as e:
             self.print_debug_info(e, self.debug_mode)
             self.response['error'] = 'Post update error..'
@@ -151,24 +174,42 @@ class Post:
         HTML safe sequences. Appends permalink to the post_data
 
         :param post_data:
-            Dictionary of post data consists of the following string keys
-            'title'
-            'description'
-            'blockchain-platform'
-            'attack-vector'
-            'vulnerability-exploited'
-            'loss-crypto'
-            'loss-usd'
-            'source-of-attack'
-            'resources'
-            'time-of-attack'
-            'time-reported'
-            'tags'
-            'author'
+            Dictionary of post data consists of the following string keys:
+                'title'
+                'description'
+                'blockchain-platform'
+                'attack-vector'
+                'vulnerability-exploited'
+                'loss-crypto'
+                'loss-usd'
+                'source-of-attack'
+                'resources'
+                'time-of-attack'
+                'time-reported'
+                'tags'
+                'author'
 
         :type post_data: dictionary
 
         :return: post_data with escaped fields + permalink + date
+            Dictionary of out post data consists of the following string keys:
+                'title'
+                'description'
+                'blockchain-platform'
+                'attack-vector'
+                'vulnerability-exploited'
+                'loss-crypto'
+                'loss-usd'
+                'source-of-attack'
+                'resources'
+                'time-of-attack'
+                'time-reported'
+                'tags'
+                'author'
+
+            ADDED by this method
+            +   'date'
+            +   'permalink'
         :rtype: dictionary
         """
         # 26 ascii_uppercase + 10 digit

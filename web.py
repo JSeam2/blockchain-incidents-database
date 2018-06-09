@@ -149,6 +149,7 @@ def new_post():
 
                          'author': session['user']['username']}
 
+            # Check for excape
             post = postClass.validate_post_data(post_data)
 
             if request.form.get('post-preview') == '1':
@@ -162,6 +163,7 @@ def new_post():
             else:
                 session.pop('post-preview', None)
 
+                # if post-id == True, the post exists, we edit the post instead
                 if request.form.get('post-id'):
                     response = postClass.edit_post(
                         request.form['post-id'], post)
@@ -170,6 +172,9 @@ def new_post():
                     else:
                         flash(response['error'], 'error')
                     return redirect(url_for('posts'))
+
+                # if post-id == False, the post doesn't exist, we create a new
+                # post
                 else:
                     response = postClass.create_new_post(post)
                     if response['error']:
