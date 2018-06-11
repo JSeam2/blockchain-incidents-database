@@ -60,10 +60,32 @@ class Settings:
                 [('query', 1), ('orderby', 1)])
             self.config['USERS_COLLECTION'].ensure_index([('date', 1)])
 
+            post_description = """Lorem ipsum dolor sit amet, consectetur \
+            adipisicing elit, sed do eiusmod tempor incididunt ut labore et \
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo \
+            consequat. Duis aute irure dolor in reprehenderit in voluptate \
+            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint \
+            occaecat cupidatat non proident, sunt in culpa qui officia \
+            deserunt mollit anim id est laborum."""
+
+            post_preview = (post_description[:150] + '...') if \
+                len(post_description) > 150 else post_description
+
             post_data = {'title': 'Hello World!',
-                         'preview': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod',
-                         'body': 'tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
-                         'tags': [],
+
+                         'preview': post_preview,
+                         'description': post_description,
+                         'blockchain-platform': 'Test Blockchain Platform',
+                         'attack-vector' : 'Test attack vector',
+                         'vulnerability-exploited': 'Test vulnerability',
+                         'loss-crypto': '1234567890 BTC',
+                         'loss-usd': '1234567890 USD',
+                         'source-of-attack': 'Test source of attack',
+                         'resources': 'Test resources',
+                         'time-of-attack': '2014/10/10 00:00:00 +04:00',
+                         'time-reported': '2014/10/10 00:00:00 +04:00',
+                         'tags': ['test'],
                          'author': user_data['_id']}
             post = postClass.validate_post_data(post_data)
 

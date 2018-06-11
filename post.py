@@ -1,4 +1,5 @@
 import datetime
+from dateutil.parser import parse
 import cgi
 from bson.objectid import ObjectId
 from helper_functions import *
@@ -32,6 +33,7 @@ class Post:
 
                 self.response['data'].append({'id': post['_id'],
                                               'title': post['title'],
+                                              'preview': post['preview'],
                                               'description': post['description'],
 
                                               'blockchain-platform': \
@@ -141,7 +143,7 @@ class Post:
         self.response['error'] = None
 
         del post_data['date']
-        del post_data['permalink']
+        #del post_data['permalink']
 
         try:
             self.collection.update(
@@ -249,14 +251,17 @@ class Post:
 
         #TODO convert the string field to date object
         post_data['time-of-attack'] = \
-            cgi.escape(post_data['time-of-attack'])
+            parse(cgi.escape(post_data['time-of-attack']))
 
         post_data['time-reported'] = \
-            cgi.escape(post_data['time-reported'])
+            parse((post_data['time-reported']))
+
 
         # append to to post_data
         post_data['date'] = datetime.datetime.utcnow()
         post_data['permalink'] = permalink
+
+        print(post_data)
 
         return post_data
 

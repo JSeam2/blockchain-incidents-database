@@ -7,24 +7,51 @@
 				<div class="col-lg-8">
 					<div class="page-header">
 						<h2>{{ post['title'] | safe }}</h2>
-						<p><span class="icon-time">&nbsp;</span>Reported on {{ post['date']
-            |formatdate }}</p>
-						<div class="social row-fluid">
-					        <!-- AddThis Button BEGIN -->
-							<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
-								<a class="addthis_button_twitter"></a>
-								<a class="addthis_button_facebook"></a>
-								<a class="addthis_button_google_plusone_share"></a>
-								<a class="addthis_button_evernote"></a>
-								<a class="addthis_button_pocket"></a>
-							</div>
-							<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-526fe54e082798d3"></script>
-							<!-- AddThis Button END -->
-				        </div>
+						<p>
+						<span class="icon-time">&nbsp;</span>
+						Time Reported: {{ post['time-reported'] }} UTC+00:00
+						</p>
+						<p>
+						<span class="icon-time">&nbsp;</span>
+						Time Of Attack: {{ post['time-of-attack'] }} UTC+00:00
+						</p>
+						<p>
+						<span class="icon-btc">&nbsp;</span>
+						Loss (Crypto): {{ post['loss-crypto'] }} 
+						</p>
+						<p>
+						<span class="icon-usd">&nbsp;</span>
+						Loss (USD): {{ post['loss-usd'] }} 
+						&nbsp;
+						<span class="glyphicon glyphicon-question-sign" 
+							data-toggle="popover" 
+							data-placement="right" 
+							data-content="Loss in USD value corresponding to crypto
+							price at time of attack">
+						</span>
+						</p>
+						<p>
+						Blockchain Platform: {{ post['blockchain-platform'] }} 
+						</p>
+						<p>
+						Attack Vector: {{ post['attack-vector'] }} 
+						</p>
+						<p>
+						Vulnerability Exploited: {{ post['vulnerability-exploited'] }}
+						</p>
+						<p>
+						Source Of Attack: {{ post['source-of-attack'] }}
+						</p>
+						<p>
+						Resources: {{ post['resources'] }} 
+						</p>
 					</div>
 					<div class="content article">
-						{{ post['preview']|markdown }}
-						{{ post['body']|markdown }}
+						<p>
+						{{ post['description'] | markdown }}
+						</p>
+						<!-- to include if we want to see authors -->
+						<!-- {{ post['author'] }} -->
 					</div>
 					<div class="infopanel">
 						<div class="tags">
@@ -35,6 +62,19 @@
 								{%- endfor -%}
 							{%- endif -%}
 						</div>
+					</div>
+					<hr>
+					<div class="social row-fluid">
+								<!-- AddThis Button BEGIN -->
+						<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+							<a class="addthis_button_twitter"></a>
+							<a class="addthis_button_facebook"></a>
+							<a class="addthis_button_google_plusone_share"></a>
+							<a class="addthis_button_evernote"></a>
+							<a class="addthis_button_pocket"></a>
+						</div>
+						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-526fe54e082798d3"></script>
+						<!-- AddThis Button END -->
 					</div>
 				</div>
 			</div>

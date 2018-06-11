@@ -106,6 +106,11 @@ def new_post():
         post_title = request.form.get('post-title').strip()
         post_description = request.form.get('post-description')
 
+        # truncate post_description as post-preview
+        post_preview = (post_description[:150]) if \
+            len(post_description) > 150 else post_description
+
+
         if not post_title or not post_full:
             error = True
 
@@ -115,6 +120,8 @@ def new_post():
 
             # Data dictionary to input into MongoDB 
             post_data = {'title': post_title,
+
+                         'preview' : post_preview,
 
                          'description': post_description,
 
