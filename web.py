@@ -88,6 +88,10 @@ def new_post():
     Stores the post data from /newpost into MongoDB
 
     Fields used (this should be self-explanatory):
+
+        #################
+            Basic STIX
+        #################
         post-title
         post-description
         post-blockchain-platform
@@ -99,6 +103,11 @@ def new_post():
         post-resources
         post-time-of-attack
         post-time-reported
+
+        #################
+          Advanced STIX
+        #################
+
     """
     error = False
     error_type = 'validate'
