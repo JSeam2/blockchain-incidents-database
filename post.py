@@ -33,7 +33,8 @@ class Post:
 
                 self.response['data'].append({'id': post['_id'],
                                               'title': post['title'],
-                                              'preview': post['preview'],
+                                              'short-description':
+                                              post['short-description'],
                                               'description': post['description'],
 
                                               'blockchain-platform': \
@@ -68,6 +69,7 @@ class Post:
                                               'tags': post['tags'],
                                               'author': post['author'],
                                               'comments': post['comments']})
+
         except Exception as e:
             self.print_debug_info(e, self.debug_mode)
             self.response['error'] = 'Posts not found..'
@@ -178,6 +180,7 @@ class Post:
         :param post_data:
             Dictionary of post data consists of the following string keys:
                 'title'
+                'short-description'
                 'description'
                 'blockchain-platform'
                 'attack-vector'
@@ -196,6 +199,7 @@ class Post:
         :return: post_data with escaped fields + permalink + date
             Dictionary of out post data consists of the following string keys:
                 'title'
+                'short-description'
                 'description'
                 'blockchain-platform'
                 'attack-vector'
@@ -224,6 +228,9 @@ class Post:
         # Escape user input fields
         post_data['title'] = \
             cgi.escape(post_data['title'])
+
+        post_data['short-description'] = \
+                cgi.escape(post_data['short-description'], quote=True)
 
         post_data['description'] = \
                 cgi.escape(post_data['description'], quote=True)

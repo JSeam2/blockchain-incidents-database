@@ -60,6 +60,8 @@ class Settings:
                 [('query', 1), ('orderby', 1)])
             self.config['USERS_COLLECTION'].ensure_index([('date', 1)])
 
+            post_short_description = "Lorem ipsum dolor sit amet, consectetur"
+
             post_description = """Lorem ipsum dolor sit amet, consectetur \
             adipisicing elit, sed do eiusmod tempor incididunt ut labore et \
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
@@ -69,12 +71,10 @@ class Settings:
             occaecat cupidatat non proident, sunt in culpa qui officia \
             deserunt mollit anim id est laborum."""
 
-            post_preview = (post_description[:150] + '...') if \
-                len(post_description) > 150 else post_description
 
             post_data = {'title': 'Hello World!',
 
-                         'preview': post_preview,
+                         'short-description': post_short_description,
                          'description': post_description,
                          'blockchain-platform': 'Test Blockchain Platform',
                          'attack-vector' : 'Test attack vector',

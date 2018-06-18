@@ -36,6 +36,7 @@
 						<!-- Overview Of Basic Fields -->
 
 						<!-- Title -->
+						<!-- Short Description -->
 						<!-- Description -->
 						<!-- Blockchain platform -->  
 						<!-- Attack Vector -->
@@ -48,7 +49,7 @@
 						<!-- Resources -->
 						
 
-						<!-- Title -->
+					<!-- Title -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
 								<label class="control-label" for="post-title">Required field</label>
@@ -57,13 +58,22 @@
 						    <input type="text" class="form-control" name="post-title" id="post-title" placeholder="Title" value="{{ post_title | safe }}" required>
 						</div>
 
+						<!-- Short Description -->
+						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
+							{%- if error and error_type == 'validate' -%}
+								<label class="control-label" for="post-short-description">Required field</label>
+							{%- endif -%}
+								<label>Short Description</label>
+						    <textarea id="post-short-description" name="post-short-description" class="form-control" rows="3" placeholder="Short Description" required>{{ post_short_description | safe }}</textarea>
+						</div>
+
 						<!-- Description -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
 								<label class="control-label" for="post-description">Required field</label>
 							{%- endif -%}
 								<label>Description</label>
-						    <textarea id="post-description" name="post-description" class="form-control" rows="7" placeholder="Description" required>{{ post_body | safe }}</textarea>
+						    <textarea id="post-description" name="post-description" class="form-control" rows="7" placeholder="Description" required>{{ post_description | safe }}</textarea>
 						</div>
 
 						<!-- Blockchain platform -->

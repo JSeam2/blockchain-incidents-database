@@ -115,14 +115,12 @@ def new_post():
     error_type = 'validate'
     if request.method == 'POST':
         post_title = request.form.get('post-title').strip()
+        post_short_description = request.form.get('post-short-description')
         post_description = request.form.get('post-description')
 
-        # truncate post_description as post-preview
-        post_preview = (post_description[:150]) if \
-            len(post_description) > 150 else post_description
-
-
-        if not post_title or not post_full:
+        if not post_title \
+           or not post_description \
+           or not post_short_description:
             error = True
 
         else:
@@ -132,7 +130,7 @@ def new_post():
             # Data dictionary to input into MongoDB 
             post_data = {'title': post_title,
 
-                         'preview' : post_preview,
+                         'short-description': post_short_description,
 
                          'description': post_description,
 
