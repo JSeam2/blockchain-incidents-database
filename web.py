@@ -184,7 +184,7 @@ def new_post():
                     response = postClass.edit_post(
                         request.form['post-id'], post)
                     if not response['error']:
-                        flash('Post updated!', 'success')
+                        flash('Incident updated!', 'success')
                     else:
                         flash(response['error'], 'error')
                     return redirect(url_for('posts'))
@@ -198,12 +198,12 @@ def new_post():
                         error_type = 'post'
                         flash(response['error'], 'error')
                     else:
-                        flash('New post created!', 'success')
+                        flash('New incident created!', 'success')
     else:
         if session.get('post-preview') and session['post-preview']['action'] == 'edit':
             session.pop('post-preview', None)
     return render_template('new_post.html',
-                           meta_title='New post',
+                           meta_title='New Incident',
                            error=error,
                            error_type=error_type)
 
@@ -253,7 +253,7 @@ def post_edit(id):
 def post_del(id):
     response = postClass.delete_post(id)
     if response['data'] is True:
-        flash('Post removed!', 'success')
+        flash('Incident removed!', 'success')
     else:
         flash(response['error'], 'error')
 
