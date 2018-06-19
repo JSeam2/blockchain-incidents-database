@@ -55,7 +55,24 @@
 								<label class="control-label" for="post-title">Required field</label>
 							{%- endif -%}
 								<label>Title</label>
+								&nbsp;
+								<span class="glyphicon glyphicon-question-sign" 
+									data-toggle="popover" 
+									data-placement="right" 
+									data-content="Incident title placement">
+								</span>
 						    <input type="text" class="form-control" name="post-title" id="post-title" placeholder="Title" value="{{ post_title | safe }}" required>
+						</div>
+
+						<div class="form-group">
+							<label>Categories</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" 
+                data-toggle="popover" 
+                data-placement="right" 
+                data-content="Opsec: Vulnerabilities which did not originate from blockchain, Smart Contracts: Vulnerabilities related to smart contracts, Protocols & Incentives: Vulnerabilities related the protocols & incentives">
+              </span>
+							<input type="text" id="post-blockchain-platform" name="post-blockchain-platform" placeholder="Blockchain Platform" class="form-control">
 						</div>
 
 						<!-- Short Description -->
@@ -64,6 +81,12 @@
 								<label class="control-label" for="post-short-description">Required field</label>
 							{%- endif -%}
 								<label>Short Description</label>
+								&nbsp;
+								<span class="glyphicon glyphicon-question-sign" 
+									data-toggle="popover" 
+									data-placement="right" 
+									data-content="Summary of description">
+								</span>
 						    <textarea id="post-short-description" name="post-short-description" class="form-control" rows="3" placeholder="Short Description" required>{{ post_short_description | safe }}</textarea>
 						</div>
 
@@ -73,17 +96,24 @@
 								<label class="control-label" for="post-description">Required field</label>
 							{%- endif -%}
 								<label>Description</label>
+								&nbsp;
+								<span class="glyphicon glyphicon-question-sign" 
+									data-toggle="popover" 
+									data-placement="right" 
+									data-content="A well described incident is written in narrative form beginning with an overview of the incident before going into how the incident occured">
+								</span>
 						    <textarea id="post-description" name="post-description" class="form-control" rows="7" placeholder="Description" required>{{ post_description | safe }}</textarea>
 						</div>
 
-						<!-- Blockchain platform -->
+						<!-- TTP -> Resources -> Infrastructure -->
+						<!-- OLD: Blockchain platform -->
 						<div class="form-group">
-							<label>Blockchain Platform</label>
+							<label>TTP -> Resources -> Infrastructure</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="Blockchain platforms or cryptocurrencies (ETH, LTC) the attack is associated with">
+                data-content="Blockchain platforms or cryptocurrencies (BTC, ETH, LTC) the attack is associated with">
               </span>
 							<input type="text" id="post-blockchain-platform" name="post-blockchain-platform" placeholder="Blockchain Platform" class="form-control">
 						</div>
@@ -110,6 +140,36 @@
                 data-content="What type of vulnerabilities was the attack associated with">
               </span>
 							<input type="text" name="post-vulnerability-exploited" id="post-vulnerability-exploited" placeholder="Vulnerability Exploited" class="form-control"/>
+						</div>
+
+						<!-- Time of Attack -->
+						<div class="form-group">
+							<label>Time of Attack</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" 
+                data-toggle="popover" 
+                data-placement="right" 
+                data-content="Transaction in blockchain"></span>
+							<input type="datetime-local" 
+              name="post-time-of-attack" 
+              id="post-time-of-attack" 
+              placeholder="Time of Attack use YYYY-MM-DD HH:MM:SS -/+HH:SS eg. 2012-02-11 10:23:00 -04:00" 
+              class="form-control"/>
+
+						</div>
+
+						<!-- Time reported -->
+						<div class="form-group">
+							<label>Time Reported</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign"
+                data-toggle="popover" 
+                data-placement="right"
+                data-content="Reported Time"></span>
+							<input type="datetime-local" name="post-time-reported"
+              id="post-time-reported" 
+              placeholder="Time Reported use YYYY-MM-DD HH:MM:SS -/+HH:SS eg. 2012-02-11 10:23:00 -04:00" 
+              class="form-control"/>
 						</div>
 
 						<!-- Loss (Crypto) @ time of attack -->
@@ -159,36 +219,6 @@
 							<input type="text" name="post-resources" id="post-resources" placeholder="Resources" class="form-control" />
 						</div>
 
-						<!-- Time of Attack -->
-						<div class="form-group">
-							<label>Time of Attack</label>
-							&nbsp;
-							<span class="glyphicon glyphicon-question-sign" 
-                data-toggle="popover" 
-                data-placement="right" 
-                data-content="Transaction in blockchain"></span>
-							<input type="datetime-local" 
-              name="post-time-of-attack" 
-              id="post-time-of-attack" 
-              placeholder="Time of Attack use YYYY-MM-DD HH:MM:SS -/+HH:SS eg. 2012-02-11 10:23:00 -04:00" 
-              class="form-control"/>
-
-						</div>
-
-						<!-- Time reported -->
-						<div class="form-group">
-							<label>Time Reported</label>
-							&nbsp;
-							<span class="glyphicon glyphicon-question-sign"
-                data-toggle="popover" 
-                data-placement="right"
-                data-content="Reported Time"></span>
-							<input type="datetime-local" name="post-time-reported"
-              id="post-time-reported" 
-              placeholder="Time Reported use YYYY-MM-DD HH:MM:SS -/+HH:SS eg. 2012-02-11 10:23:00 -04:00" 
-              class="form-control"/>
-						</div>
-
 						<br>
 						<hr>
 
@@ -224,8 +254,6 @@
 			</div>
 		</div>
 	</div>
+  <script src="{{ url_for('static', filename='js/popover.js') }}"></script>
 {%- endblock -%}
 
-{%- block scripts -%}
-  <script src="{{ url_for('static', filename='js/popover.js') }}></script>
-{%- endblock -%}

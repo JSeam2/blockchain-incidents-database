@@ -33,8 +33,7 @@ class Post:
 
                 self.response['data'].append({'id': post['_id'],
                                               'title': post['title'],
-                                              'short-description':
-                                              post['short-description'],
+                                              # 'short-description': post['short-description'],
                                               'description': post['description'],
 
                                               'blockchain-platform': \
