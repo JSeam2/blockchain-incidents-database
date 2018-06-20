@@ -140,6 +140,17 @@ a.icon {
 }
 .navbar {min-height:53px;}
 
+.navbar-brand {
+  padding: 0px;
+  height: 90%;
+}
+
+.navbar-brand>img {
+  padding: 0px;
+  width: 180px;
+}
+
+
 legend {
     padding-top:20px;
     border:none;
