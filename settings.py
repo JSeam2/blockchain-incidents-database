@@ -83,7 +83,7 @@ class Settings:
                          'loss-usd': '1234567890 USD',
                          'source-of-attack': 'Test source of attack',
                          'resources': 'Test resources',
-                         'time-of-attack': '2014/10/10 00:00:00 +04:00',
+                         'time-of-attack': '',
                          'time-reported': '2014/10/10 00:00:00 +04:00',
                          'tags': ['test'],
                          'author': user_data['_id']}

@@ -48,12 +48,12 @@ def posts_by_tag(tag, page):
     return render_template('index.html', posts=posts['data'], pagination=pag, meta_title='Posts by tag: ' + tag)
 
 
-@app.route('/post/<permalink>')
+@app.route('/incident/<permalink>')
 def single_post(permalink):
     post = postClass.get_post_by_permalink(permalink)
     if not post['data']:
         abort(404)
-    return render_template('single_post.html', post=post['data'], meta_title=app.config['BLOG_TITLE'] + '::' + post['data']['title'])
+    return render_template('single_incident.html', post=post['data'], meta_title=app.config['BLOG_TITLE'] + '::' + post['data']['title'])
 
 
 @app.route('/q/<query>', defaults={'page': 1})
@@ -83,11 +83,11 @@ def search():
         return redirect(url_for('index'))
 
 
-@app.route('/newpost', methods=['GET', 'POST'])
+@app.route('/new_incident', methods=['GET', 'POST'])
 @login_required()
 def new_post():
     """
-    Stores the post data from /newpost into MongoDB
+    Stores the post data from /newincident into MongoDB
 
     Fields used (this should be self-explanatory):
 
@@ -202,21 +202,21 @@ def new_post():
     else:
         if session.get('post-preview') and session['post-preview']['action'] == 'edit':
             session.pop('post-preview', None)
-    return render_template('new_post.html',
+    return render_template('new_incident.html',
                            meta_title='New Incident',
                            error=error,
                            error_type=error_type)
 
 
-@app.route('/post_preview')
+@app.route('/incident_preview')
 @login_required()
 def post_preview():
     post = session.get('post-preview')
     return render_template('preview.html', post=post, meta_title='Preview post::' + post['title'])
 
 
-@app.route('/posts_list', defaults={'page': 1})
-@app.route('/posts_list/page-<int:page>')
+@app.route('/incidents_list', defaults={'page': 1})
+@app.route('/incidents_list/page-<int:page>')
 @login_required()
 def posts(page):
     session.pop('post-preview', None)
@@ -228,10 +228,10 @@ def posts(page):
     if not posts['data']:
         abort(404)
 
-    return render_template('posts.html', posts=posts['data'], pagination=pag, meta_title='Posts')
+    return render_template('incidents.html', posts=posts['data'], pagination=pag, meta_title='Posts')
 
 
-@app.route('/post_edit?id=<id>')
+@app.route('/incident_edit?id=<id>')
 @login_required()
 def post_edit(id):
     post = postClass.get_post_by_id(id)
@@ -241,14 +241,14 @@ def post_edit(id):
 
     if session.get('post-preview') and session['post-preview']['action'] == 'add':
         session.pop('post-preview', None)
-    return render_template('edit_post.html',
+    return render_template('edit_incident.html',
                            meta_title='Edit post::' + post['data']['title'],
                            post=post['data'],
                            error=False,
                            error_type=False)
 
 
-@app.route('/post_delete?id=<id>')
+@app.route('/incident_delete?id=<id>')
 @login_required()
 def post_del(id):
     response = postClass.delete_post(id)
@@ -376,7 +376,7 @@ def recent_feed():
                     feed_url=request.url, url=request.url_root)
     posts = postClass.get_posts(int(app.config['PER_PAGE']), 0)
     for post in posts['data']:
-        post_entry = post['preview'] if post['preview'] else post['body']
+        post_entry = post['short-description'] if post['short-description'] else post['description']
         feed.add(post['title'], md(post_entry),
                  content_type='html',
                  url=make_external(

@@ -33,7 +33,7 @@ class Post:
 
                 self.response['data'].append({'id': post['_id'],
                                               'title': post['title'],
-                                              # 'short-description': post['short-description'],
+                                              'short-description': post['short-description'],
                                               'description': post['description'],
 
                                               'blockchain-platform': \
@@ -57,11 +57,11 @@ class Post:
                                               'resources': \
                                                 post['resources'],
 
-                                              'time-of-attack': \
-                                                post['time-of-attack'],
+                                              'date-of-attack': \
+                                                post['date-of-attack'],
 
-                                              'time-reported': \
-                                                post['time-reported'],
+                                              'date-reported': \
+                                                post['date-reported'],
 
                                               'date': post['date'],
                                               'permalink': post['permalink'],
@@ -255,12 +255,21 @@ class Post:
         post_data['resources'] = \
             cgi.escape(post_data['resources'])
 
-        #TODO convert the string field to date object
-        post_data['time-of-attack'] = \
-            parse(cgi.escape(post_data['time-of-attack']))
+        try:
+            post_data['date-of-attack'] = \
+                parse(cgi.escape(post_data['date-of-attack']))
 
-        post_data['time-reported'] = \
-            parse((post_data['time-reported']))
+        # Put as None if there is a bug
+        except:
+            post_data['date-of-attack'] = None
+
+        try:
+            post_data['date-reported'] = \
+                parse((post_data['date-reported']))
+
+        # Put as None if there is a bug
+        except:
+            post_data['date-reported'] = None
 
 
         # append to to post_data

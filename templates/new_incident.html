@@ -36,6 +36,7 @@
 						<!-- Overview Of Basic Fields -->
 
 						<!-- Title -->
+						<!-- Categories -->
 						<!-- Short Description -->
 						<!-- Description -->
 						<!-- Blockchain platform -->  
@@ -49,7 +50,7 @@
 						<!-- Resources -->
 						
 
-					<!-- Title -->
+						<!-- Title -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
 								<label class="control-label" for="post-title">Required field</label>
@@ -64,6 +65,7 @@
 						    <input type="text" class="form-control" name="post-title" id="post-title" placeholder="Title" value="{{ post_title | safe }}" required>
 						</div>
 
+						<!-- Categories -->
 						<div class="form-group">
 							<label>Categories</label>
 							&nbsp;

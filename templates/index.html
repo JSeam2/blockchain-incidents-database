@@ -11,16 +11,23 @@
 							<div class="post clearfix">
 								<div class="row">
 									<div class="col-lg-8">
+
 										<!-- Header Field For Incident Entry -->
 										<div class="page-header">
 											<h3><a href="{{ url_for('single_post', permalink=post['permalink']) }}">{{ post['title'] | safe }}</a></h3>
 											<p><span class="icon-time">&nbsp;</span>
-                      Time Reported: {{ post['time-reported'] | formatdate }}
-                      UTC+00:00
+                      {%- if post['date'] -%}
+                        Date Of Creation: {{ post['date'] | formatdate }}
+                      {%- else -%}
+                        Date Of Creation: Unknown
+                      {%- endif -%}
                       </p>
 											<p><span class="icon-time">&nbsp;</span>
-                      Time Of Attack: {{ post['time-of-attack'] | formatdate }}
-                      UTC+00:00
+                      {%- if post['date-of-attack'] -%}
+                        Date Of Attack: {{ post['date-of-attack'] | formatdate }}
+                      {%- else -%}
+                        Date Of Attack: Unknown
+                      {%- endif -%}
                       </p>
 											<p><span class="icon-btc">&nbsp;</span>
                       Value Loss (Crypto): {{ post['loss-crypto'] }}
@@ -28,32 +35,14 @@
 											<p><span class="icon-usd">&nbsp;</span>
                       Value Loss (USD) : {{ post['loss-usd'] }}
                       &nbsp;
-                      <span class="glyphicon glyphicon-question-sign" 
-                        data-toggle="popover" 
-                        data-placement="right" 
-                        data-content="Loss in USD value corresponding to crypto
-                        price at time of attack">
-                      </span>
                       </p>
 										</div>
 
 										<div class="content no-lightbox">
-											{%- if post['preview'] -%}
-												{{ post['preview'] | markdown }}
+											{%- if post['short-description'] -%}
+												{{ post['short-description'] | markdown }}
 											{%- endif -%}
 											<a href="{{ url_for('single_post', permalink=post['permalink']) }}">More Details ... </a>
-										</div>
-
-										<!-- Tags -->
-										<div class="infopanel">
-											<div class="tags">
-												<li class="icon-tags" title="tags"></li>
-												{%- if post['tags'] -%}
-													{%- for tag in post['tags'] -%}
-														&nbsp;<a href="{{ url_for('posts_by_tag', tag=tag) }}">{{ tag }}</a>
-													{%- endfor -%}
-												{%- endif -%}
-											</div>
 										</div>
 									</div>
 								</div>
@@ -95,10 +84,6 @@
 			</div>
 		</div>
 		{%- include 'footer.html' -%}
-		{%- block scripts -%}
-			{%- block additional_js -%}{%- endblock -%}
-      <script src="{{ url_for('static', filename='js/popover.js') }}></script>
-			<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-		{%- endblock -%}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 	</body>
 </html>

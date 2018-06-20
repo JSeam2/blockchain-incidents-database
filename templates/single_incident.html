@@ -9,11 +9,27 @@
 						<h2>{{ post['title'] | safe }}</h2>
 						<p>
 						<span class="icon-time">&nbsp;</span>
-						Time Reported: {{ post['time-reported'] }} UTC+00:00
+            {%- if post['date'] -%}
+              Date Of Creation: {{ post['date'] | formatdate }}
+            {%- else -%}
+              Date Of Creation: Unknown
+            {%- endif -%}
 						</p>
 						<p>
 						<span class="icon-time">&nbsp;</span>
-						Time Of Attack: {{ post['time-of-attack'] }} UTC+00:00
+            {%- if post['date-reported'] -%}
+              Date Reported: {{ post['date-reported'] }}
+            {%- else -%}
+              Date Reported: Unknown
+            {%- endif -%}
+						</p>
+						<p>
+						<span class="icon-time">&nbsp;</span>
+            {%- if post['date-of-attack'] -%}
+              Date Of Attack: {{ post['date-of-attack'] }}
+            {%- else -%}
+              Date Of Attack: Unknown
+            {%- endif -%}
 						</p>
 						<p>
 						<span class="icon-btc">&nbsp;</span>
@@ -47,25 +63,21 @@
 						</p>
 					</div>
 					<div class="content article">
+            <strong>Short Description</strong>
+            <p>
+              {{ post ['short-description'] | markdown }}
+            </p>
+
+            <strong>Description</strong>
 						<p>
 						{{ post['description'] | markdown }}
 						</p>
 						<!-- to include if we want to see authors -->
 						<!-- {{ post['author'] }} -->
 					</div>
-					<div class="infopanel">
-						<div class="tags">
-							<i>tags:</i>
-							{%- if post['tags'] -%}
-								{%- for tag in post['tags'] -%}
-									&nbsp;<a href="{{ url_for('posts_by_tag', tag=tag) }}">{{ tag }}</a>
-								{%- endfor -%}
-							{%- endif -%}
-						</div>
-					</div>
 					<hr>
 					<div class="social row-fluid">
-								<!-- AddThis Button BEGIN -->
+            <!-- AddThis Button BEGIN -->
 						<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
 							<a class="addthis_button_twitter"></a>
 							<a class="addthis_button_facebook"></a>
@@ -81,5 +93,7 @@
 		</div>
 	{%- endif -%}
 	{%- include 'sidebar.html' -%}
+  <script src="{{ url_for('static', filename='js/lightbox-2.6.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/popover.js') }}"></script>
 {%- endblock -%}
-{%- block additional_js -%}<script src="{{ url_for('static', filename='js/lightbox-2.6.min.js') }}"></script>{%- endblock -%}
+
