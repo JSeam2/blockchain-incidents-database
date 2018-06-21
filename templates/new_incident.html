@@ -1,17 +1,27 @@
 {%- extends 'index.html' -%}
 {%- block body -%}
+	<!-- TODO Modify this to support post preview -->
 	{% if session.get('post-preview') %}
 		{% set post_title = session['post-preview'].get('title', None) %}
 		{% set post_preview = session['post-preview'].get('preview', None) %}
 		{% set post_body = session['post-preview'].get('body', None) %}
 		{% set post_tags = session['post-preview'].get('tags', None) %}
 	{% else %}
-		{% set post_title = '' %}
-		{% set post_preview = '' %}
-		{% set post_body = '' %}
-		{% set post_tags = '' %}
+		{% set incident_title = '' %}
+		{% set incident_short_description = '' %}
+		{% set incident_description = '' %}
+		{% set ttp_resource_infrastructure = '' %}
+		{% set incident_categories = '' %}
+		{% set ttp_description = '' %}
+		{% set ttp_exploits_targets = '' %}
+		{% set incident_time_initial_compromise = '' %}
+		{% set incident_time_incident_reported = '' %}
+		{% set loss_crypto = '' %}
+		{% set loss_usd = '' %}
+		{% set description_geographical = '' %}
+		{% set references = '' %}
 	{% endif %}
-
+:
 	<!-- TODO tooltips -->
 	<div class="post clearfix">
 		<div class="row">
@@ -36,49 +46,97 @@
 						<!-- Overview Of Basic Fields -->
 
 						<!-- Incident -> Title -->
-						<!-- Categories ?? -->
-						<!-- Short Description -->
-						<!-- Description -->
-						<!-- Blockchain platform -->  
-						<!-- Attack Vector -->
-						<!-- Vulnerability Exploited -->
+						<!-- Incident -> Short Description -->
+						<!-- Incident -> Description -->
+						<!-- TTP -> Resources -> Infrastructure -->  
+						<!-- Incident -> Categories -->
+						<!-- TTP -> Description -->
+						<!-- TTP -> Exploits Targets-->
 						<!-- Time of Attack -->
-						<!-- Time reported -->
-						<!-- Loss (Crypto) @ time of attack -->
-						<!-- Loss (USD) @ time of attack -->
-						<!-- Geographical origin of attack, Source of attack -->
-						<!-- Resources -->
+						<!-- Incident -> Time -> Initial_Compromise -->
+						<!-- Incident -> Time -> Incident_Reported -->
+						<!-- Total_Loss_Estimation -> Actual_Total_Loss_Estimation (Cryptocurrency) -->
+						<!-- Total_Loss_Estimation -> Actual_Total_Loss_Estimation (USD) -->
+						<!-- Attributed_Threat_Actors -> Threat_Actor_Type -> Description (Geographical) -->
+						<!-- References -->
 						
 
-						<!-- Title -->
+						<!-- Incident -> Title -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
-								<label class="control-label" for="post-title">Required field</label>
+								<label class="control-label" for="incident-title">Required field</label>
 							{%- endif -%}
-								<label>Title</label>
+								<label>Incident -> Title</label>
 								&nbsp;
 								<span class="glyphicon glyphicon-question-sign" 
 									data-toggle="popover" 
 									data-placement="right" 
 									data-content="Incident title placement">
 								</span>
-						    <input type="text" class="form-control" name="post-title" id="post-title" placeholder="Title" value="{{ post_title | safe }}" required>
+						    <input type="text" class="form-control" name="incident-title" id="incident-title" placeholder="Title" value="{{ incident_title | safe }}" required>
 						</div>
 
-						<!-- Categories -->
+
+						<!-- Incident -> Short Description -->
+						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
+							{%- if error and error_type == 'validate' -%}
+								<label class="control-label" for="incident-short-description">Required field</label>
+							{%- endif -%}
+								<label>Incident -> Short Description</label>
+								&nbsp;
+								<span class="glyphicon glyphicon-question-sign" 
+									data-toggle="popover" 
+									data-placement="right" 
+									data-content="Summary of description">
+								</span>
+						    <textarea id="incident-short-description" name="incident-short-description" class="form-control" rows="3" placeholder="Short Description" required>{{ incident_short_description | safe }}</textarea>
+						</div>
+
+						<!-- Incident -> Description -->
+						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
+							{%- if error and error_type == 'validate' -%}
+								<label class="control-label" for="incident-description">Required field</label>
+							{%- endif -%}
+								<label>Incident -> Description</label>
+								&nbsp;
+								<span class="glyphicon glyphicon-question-sign" 
+									data-toggle="popover" 
+									data-placement="right" 
+									data-content="A well described incident is written in narrative form beginning with an overview of the incident before going into how the incident occured">
+								</span>
+						    <textarea id="incident-description" name="incident-description" class="form-control" rows="7" placeholder="Description" required>{{ incident_description | safe }}</textarea>
+						</div>
+
+						<!-- TTP -> Resources -> Infrastructure -->
+						<!-- OLD: Blockchain platform -->
 						<div class="form-group">
-							<label>Categories</label>
+							<label>TTP -> Resources -> Infrastructure</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-								data-content="
-								Opsec: Vulnerabilities which did not originate from blockchain</br> 
-								Smart Contracts: Vulnerabilities related to smart contracts</br> 
-								Protocols & Incentives: Vulnerabilities related the protocols & incentives">
+                data-content="Blockchain platforms or cryptocurrencies (BTC, ETH, LTC) the attack is associated with">
               </span>
-							<input type="text" list="incident-categories" id="post-categories" name="post-categories" placeholder="Categories" class="form-control">
-							<datalist id="incident-categories" name="incident-categories">
+							<input type="text" id="ttp-resources-infrastructure" name="ttp-resources-infrastructure" placeholder="Infrastructure, Blockchain Platform (eg. Bitcoin, Ethereum, etc.)" class="form-control" value="{{ ttp_resource_infrastructure | safe }}">
+						</div>
+
+						<!-- Incident -> Categories -->
+						<div class="form-group">
+							<label>Incident -> Categories</label>
+							&nbsp;
+							<span class="glyphicon glyphicon-question-sign" 
+                data-toggle="popover" 
+                data-placement="right" 
+								data-html="true"
+								data-content="
+								Indicate Source of Vulnerability </br></br>
+								<strong>Opsec</strong>: Vulnerabilities which did not originate from blockchain</br> 
+								<strong>Smart Contracts</strong>: Vulnerabilities related to smart contracts</br> 
+								<strong>Protocols & Incentives</strong>: Vulnerabilities related the protocols & incentives">
+              </span>
+							<input type="text" list="list-categories" id="incident-categories" name="incident-categories" placeholder="Categories" class="form-control" value="{{ incident_categories | safe }}">
+							
+							<datalist id="list-categories" name="incident-categories">
 								<option value="Opsec">Opsec : Vulnerabilities not originating from blockchain</option>
 								<option value="Smart Contract - Call to the Unknown">Smart Contract - Call to the Unknown : Sends ether before decreasing credit</option>
 								<option value="Smart Contract - Gasless Send">Smart Contract - Gasless Send : Out-of-gas exception</option>
@@ -92,152 +150,127 @@
 								<option value="Smart Contract - Stack Size Limit (Mishandled Exceptions)">Smart Contract - Stack Size Limit (Mishandled Exceptions): Call stack is bounded to 1024 frames</option>
 								<option value="Smart Contract - Unpredictable State">Smart Contract - Unpredictable State: User does not know the actual state wherein the transaction is run</option>
 								<option value="Smart Contract - Generating Randomness">Smart Contract - Generating Randomness : EVM code is deterministic and is only pseudo-random</option>
+
 								<!-- TODO ADD MORE FORM DETAILS FROM GOOGLE DOCS -->
 							</datalist>
 						</div>
 
-						<!-- Short Description -->
-						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
-							{%- if error and error_type == 'validate' -%}
-								<label class="control-label" for="post-short-description">Required field</label>
-							{%- endif -%}
-								<label>Short Description</label>
-								&nbsp;
-								<span class="glyphicon glyphicon-question-sign" 
-									data-toggle="popover" 
-									data-placement="right" 
-									data-content="Summary of description">
-								</span>
-						    <textarea id="post-short-description" name="post-short-description" class="form-control" rows="3" placeholder="Short Description" required>{{ post_short_description | safe }}</textarea>
-						</div>
-
-						<!-- Description -->
-						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
-							{%- if error and error_type == 'validate' -%}
-								<label class="control-label" for="post-description">Required field</label>
-							{%- endif -%}
-								<label>Description</label>
-								&nbsp;
-								<span class="glyphicon glyphicon-question-sign" 
-									data-toggle="popover" 
-									data-placement="right" 
-									data-content="A well described incident is written in narrative form beginning with an overview of the incident before going into how the incident occured">
-								</span>
-						    <textarea id="post-description" name="post-description" class="form-control" rows="7" placeholder="Description" required>{{ post_description | safe }}</textarea>
-						</div>
-
-						<!-- TTP -> Resources -> Infrastructure -->
-						<!-- OLD: Blockchain platform -->
+						<!-- TTP -> Description -->
 						<div class="form-group">
-							<label>TTP -> Resources -> Infrastructure</label>
+							<label>TTP -> Description</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="Blockchain platforms or cryptocurrencies (BTC, ETH, LTC) the attack is associated with">
+                data-content="How did the attack happen? How attack is carried out, eg. Internet, client application (wallet), server, humans">
               </span>
-							<input type="text" id="post-blockchain-platform" name="post-blockchain-platform" placeholder="Blockchain Platform" class="form-control">
+							<input type="text" name="ttp-description" id="ttp-description" placeholder="Description of Mechanics of Attack, ie. Attack Vector" class="form-control" value="{{ ttp_description | safe }}"/>
 						</div>
 
-						<!-- Attack Vector -->
+						<!-- TTP -> Exploits Targets -->
 						<div class="form-group">
-							<label>Attack Vector</label>
-								&nbsp;
-							<span class="glyphicon glyphicon-question-sign" 
-                data-toggle="popover" 
-                data-placement="right" 
-                data-content="Route which attack is carried out, eg. Internet, client application (wallet), server, humans">
-              </span>
-							<input type="text" name="post-attack-vector" id="post-attack-vector" placeholder="Attack Vector" class="form-control"/>
-						</div>
-
-						<!-- Vulnerability Exploited -->
-						<div class="form-group">
-							<label>Vulnerability Exploited</label>
+							<label>TTP -> Exploits Targets</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="What type of vulnerabilities was the attack associated with">
+                data-content="What type of vulnerabilities the attack exploited?">
               </span>
-							<input type="text" name="post-vulnerability-exploited" id="post-vulnerability-exploited" placeholder="Vulnerability Exploited" class="form-control"/>
+							<input type="text" name="ttp-exploits-targets" id="ttp-exploits-targets" placeholder="Vulnerability Exploited" class="form-control" value="{{ ttp_exploits_targets | safe }}"/>
 						</div>
 
-						<!-- Time of Attack -->
+						<!-- Incident -> Time -> Intial_Compromise -->
 						<div class="form-group">
-							<label>Time of Attack</label>
+							<label>Incident -> Time -> Intial_Compromise </label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="Transaction in blockchain"></span>
-							<input type="datetime-local" 
-              name="post-time-of-attack" 
-              id="post-time-of-attack" 
-              placeholder="Time of Attack use YYYY-MM-DD HH:MM:SS -/+HH:SS eg. 2012-02-11 10:23:00 -04:00" 
-              class="form-control"/>
+								data-html="true"
+                data-content="
+								Date to be taken from the transaction that the attacked occured from the blockchain.</br>
+								<strong>Use date format: YYYYMMDD</strong>
+								"></span>
+							<input type="date" 
+								name="incident-time-initial-compromise" 
+								id="incident-time-initial-compromise" 
+								placeholder="Date" 
+								class="form-control"
+								value="{{ incident_time_initial_compromise | safe }}"/>
 
 						</div>
 
-						<!-- Time reported -->
+						<!-- Incident -> Time -> Incident_Reported -->
 						<div class="form-group">
-							<label>Time Reported</label>
+							<label>Incident -> Time -> Incident_Reported</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign"
                 data-toggle="popover" 
                 data-placement="right"
-                data-content="Reported Time"></span>
-							<input type="datetime-local" name="post-time-reported"
-              id="post-time-reported" 
-              placeholder="Time Reported use YYYY-MM-DD HH:MM:SS -/+HH:SS eg. 2012-02-11 10:23:00 -04:00" 
-              class="form-control"/>
+								data-html="true"
+                data-content="
+								Time it was announced to the public such as when a user seeks help for an attack which is eventually verified to be real or when an organization places a press release.</br>
+								<strong>Use date format: YYYYMMDD</strong>
+								"></span>
+							<input type="date" name="incident-time-incident-reported"
+								id="incident-time-incident-reported" 
+								placeholder="Date" 
+								class="form-control"
+								value="{{ incident_time_incident_reported | safe }}"/>
 						</div>
 
-						<!-- Loss (Crypto) @ time of attack -->
+						<!-- Total_Loss_Estimation -> Actual_Total_Loss_Estimation (Cryptocurrency) -->
 						<div class="form-group">
-							<label>Loss (Crypto) @ Time of Attack</label>
+							<label>Total_Loss_Estimation -> Actual_Total_Loss_Estimation (Cryptocurrency)</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="Utilize standard crypto ticker eg. 100 BTC">
+                data-content="Specifies the actual level of total estimate cryptocurrency loss for incidents. Use numerical values eg. 100 BTC">
               </span>
-							<input type="text" name="post-loss-crypto" id="post-loss-crypto" placeholder="Loss (Crypto) @ Time of Attack" class="form-control"/>
+							<input type="text" name="loss-crypto" id="loss-crypto" placeholder="Indicate as eg. 100 BTC" class="form-control" value="{{ loss_crypto | safe }}"/>
 						</div>
 
-						<!-- Loss (USD) @ time of attack -->
+						<!-- Total_Loss_Estimation -> Actual_Total_Loss_Estimation (USD) -->
 						<div class="form-group">
-							<label>Loss (USD) @ Time of Attack</label>
+							<label>Total_Loss_Estimation -> Actual_Total_Loss_Estimation (USD)</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="Take USD price from multiple charts">
+                data-content="Total Loss Estimation of USD losses. Use numerical values eg. 100 USD">
               </span>
-							<input type="text" name="post-loss-usd" id="post-loss-usd" placeholder="Loss (USD) @ Time of Attack" class="form-control"/>
+							<input type="text" name="loss-usd" id="loss-usd" placeholder="Indicate as eg. 100 USD" class="form-control" value="{{ loss_usd | safe }}"/>
 						</div>
 
-						<!-- Geographical origin of attack, Source of attack -->
+						<!-- Attributed_Threat_Actors -> Threat_Actor_type -> Description (Geographical) -->
+						<!-- TODO -->
 						<div class="form-group">
-							<label>Geographical origin of attack, Source of Attack</label>
+							<label>Attributed_Threat_Actors -> Threat_Actor_type -> Description (Geographical)</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="Nationality / origin of smart contract uploading IP">
+                data-content="Trace through IP addresses if possible. Use ISO 3166 for country code. (To be more specific theres, English short name, Alpha-2 code, Alpha-3 code">
               </span>
-							<input type="text" name="post-source-of-attack" id="post-source-of-attack" placeholder="Geographical origin of attack, Source of attack" class="form-control"/> 
+							<input type="text" name="description-geographical" id="description-geographical" placeholder="Geographical origin of attack, eg. ???" class="form-control" value="{{ description_geographical | safe }}"/> 
 						</div>
 
-						<!-- Resources -->
+						<!-- References -->
+						<!-- TODO include file storage -->
 						<div class="form-group">
-							<label>Resources</label>
+							<label>References</label>
 							&nbsp;
 							<span class="glyphicon glyphicon-question-sign" 
                 data-toggle="popover" 
                 data-placement="right" 
-                data-content="References and links to article"></span>
-							<input type="text" name="post-resources" id="post-resources" placeholder="Resources" class="form-control" />
+								data-html="true"
+								data-content="
+								Short description of how the source is used including the link.</br>
+								Include URL, Files (pdf, doc, docx, txt, etc.)
+								">
+							</span>
+							<input type="text" name="references" id="references" placeholder="References" class="form-control" value="{{ references | safe }}"/>
 						</div>
 
 						<br>
@@ -248,18 +281,6 @@
 
 						<br>
 						<hr>
-
-						<h3>Website Metadata</h3>
-						<br>
-						<!-- Tags -->
-						<div class="form-group">
-							<label for="post-tags">Tags 
-								&nbsp;
-								<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-placement="bottom" data-content="The site uses tags to search for incidents this is not included in STIX fields"></span>
-							</label>
-						    <input type="text" name="post-tags" class="form-control" id="post-tags" placeholder="Input comma separated tags (eg. Bird, Train) for searches" value="{{ ','.join(post_tags) }}">
-						</div>
-
 
 						<!-- Submit -->
 						<div class="form-group">

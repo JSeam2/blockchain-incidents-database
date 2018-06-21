@@ -31,43 +31,26 @@ class Post:
                 if 'comments' not in post:
                     post['comments'] = []
 
-                self.response['data'].append({'id': post['_id'],
-                                              'title': post['title'],
-                                              'short-description': post['short-description'],
-                                              'description': post['description'],
+                self.response['data'].append({
+                    'id': post['_id'],
+                    'incident_title': post['title'],
+                    'incident_short_description': post['incident_short_description'],
+                    'incident_description': post['incident_description'],
+                    'ttp_resource_infrastructure': post['ttp_resource_infrastructure'],
+                    'incident_categories': post['incident_categories'],
+                    'ttp_description': post['ttp_description'],
+                    'ttp_exploits_targets': post['ttp_exploits_targets'],
+                    'incident_time_initial_compromise': post['incident_time_initial_compromise'],
+                    'incident_time_incident_reported': post['incident_time_incident_reported'],
 
-                                              'blockchain-platform': \
-                                                post['blockchain-platform'],
-
-                                              'attack-vector': \
-                                                post['attack-vector'],
-
-                                              'vulnerability-exploited': \
-                                                post['vulnerability-exploited'],
-
-                                              'loss-crypto': \
-                                                post['loss-crypto'],
-
-                                              'loss-usd': \
-                                                post['loss-usd'],
-
-                                              'source-of-attack': \
-                                                post['source-of-attack'],
-
-                                              'resources': \
-                                                post['resources'],
-
-                                              'date-of-attack': \
-                                                post['date-of-attack'],
-
-                                              'date-reported': \
-                                                post['date-reported'],
-
-                                              'date': post['date'],
-                                              'permalink': post['permalink'],
-                                              'tags': post['tags'],
-                                              'author': post['author'],
-                                              'comments': post['comments']})
+                    'loss_crypto': post['loss-crypto'],
+                    'loss_usd': post['loss_usd'],
+                    'description_geographical': post['description_geographical'],
+                    'references': post['references']
+                    'date': post['date'],
+                    'permalink': post['permalink'],
+                    'author': post['author'],
+                    'comments': post['comments']})
 
         except Exception as e:
             self.print_debug_info(e, self.debug_mode)
@@ -178,43 +161,47 @@ class Post:
 
         :param post_data:
             Dictionary of post data consists of the following string keys:
-                'title'
-                'short-description'
-                'description'
-                'blockchain-platform'
-                'attack-vector'
-                'vulnerability-exploited'
-                'loss-crypto'
-                'loss-usd'
-                'source-of-attack'
-                'resources'
-                'time-of-attack'
-                'time-reported'
-                'tags'
+                'id'
+                'incident_title'
+                'incident_short_description'
+                'incident_description'
+                'ttp_resource_infrastructure'
+                'incident_categories'
+                'ttp_description'
+                'ttp_exploits_targets'
+                'incident_time_initial_compromise'
+                'incident_time_incident_reported'
+                'loss_crypto'
+                'loss_usd'
+                'description_geographical'
+                'references'
                 'author'
+                'comments'
 
         :type post_data: dictionary
 
         :return: post_data with escaped fields + permalink + date
             Dictionary of out post data consists of the following string keys:
-                'title'
-                'short-description'
-                'description'
-                'blockchain-platform'
-                'attack-vector'
-                'vulnerability-exploited'
-                'loss-crypto'
-                'loss-usd'
-                'source-of-attack'
-                'resources'
-                'time-of-attack'
-                'time-reported'
-                'tags'
+                'id'
+                'incident_title'
+                'incident_short_description'
+                'incident_description'
+                'ttp_resource_infrastructure'
+                'incident_categories'
+                'ttp_description'
+                'ttp_exploits_targets'
+                'incident_time_initial_compromise'
+                'incident_time_incident_reported'
+                'loss_crypto'
+                'loss_usd'
+                'description_geographical'
+                'references'
                 'author'
-
+                'comments'
             ADDED by this method
             +   'date'
             +   'permalink'
+
         :rtype: dictionary
         """
         # 26 ascii_uppercase + 10 digit
@@ -225,52 +212,34 @@ class Post:
 
 
         # Escape user input fields
-        post_data['title'] = \
-            cgi.escape(post_data['title'])
-
-        post_data['short-description'] = \
-                cgi.escape(post_data['short-description'], quote=True)
-
-        post_data['description'] = \
-                cgi.escape(post_data['description'], quote=True)
-
-        post_data['blockchain-platform'] = \
-            cgi.escape(post_data['blockchain-platform'])
-
-        post_data['attack-vector'] = \
-            cgi.escape(post_data['attack-vector'])
-
-        post_data['vulnerability-exploited'] = \
-            cgi.escape(post_data['vulnerability-exploited'])
-
-        post_data['loss-crypto'] = \
-            cgi.escape(post_data['loss-crypto'])
-
-        post_data['loss-usd'] = \
-            cgi.escape(post_data['loss-usd'])
-
-        post_data['source-of-attack'] = \
-            cgi.escape(post_data['source-of-attack'])
-
-        post_data['resources'] = \
-            cgi.escape(post_data['resources'])
+        post_data['incident_title'] = cgi.escape(post_data['incident_title'])
+        post_data['incident_short_description'] = cgi.escape(post_data['incident_short_description'], quote=True)
+        post_data['incident_description'] = cgi.escape(post_data['incident_description'], quote=True)
+        post_data['ttp_resource_infrastructure'] = cgi.escape(post_data['ttp_resource_infrastructure'])
+        post_data['incident_categories'] = cgi.escape(post_data['incident_categories'])
+        post_data['ttp_description'] = cgi.escape(post_data['ttp_description'])
+        post_data['ttp_exploits_targets'] = cgi.escape(post_data['ttp_exploits_targets'])
 
         try:
-            post_data['date-of-attack'] = \
-                parse(cgi.escape(post_data['date-of-attack']))
+            post_data['incident_time_initial_compromise'] = \
+                parse(cgi.escape(post_data['incident_time_initial_compromise']))
 
         # Put as None if there is a bug
         except:
-            post_data['date-of-attack'] = None
+            post_data['incident_time_initial_compromise'] = None
 
         try:
-            post_data['date-reported'] = \
-                parse((post_data['date-reported']))
+            post_data['incident_time_incident_reported'] = \
+                parse((post_data['incident_time_incident_reported']))
 
         # Put as None if there is a bug
         except:
-            post_data['date-reported'] = None
+            post_data['incident_time_incident_reported'] = None
 
+        post_data['loss_crypto'] = cgi.escape(post_data['loss_crypto'])
+        post_data['loss_usd'] = cgi.escape(post_data['loss_usd'])
+        post_data['description_geographical'] = cgi.escape(post_data['description_geographical'])
+        post_data['references'] = cgi.escape(post_data['references'])
 
         # append to to post_data
         post_data['date'] = datetime.datetime.utcnow()
