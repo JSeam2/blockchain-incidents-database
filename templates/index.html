@@ -31,10 +31,18 @@
                       {%- endif -%}
                       </p>
 											<p><span class="icon-btc">&nbsp;</span>
-                      Value Loss (Crypto): {{ post['loss_crypto'] }}
+											{%- if post['loss_crypto'] -%}
+												Value Loss (Crypto): {{ post['loss_crypto'] }}
+											{%- else -%}
+												Value Loss (Crypto): Unknown
+											{%- endif -%}
                       </p>
 											<p><span class="icon-usd">&nbsp;</span>
-                      Value Loss (USD) : {{ post['loss_usd'] }}
+											{%- if post['loss_usd'] -%}
+												Value Loss (USD): {{ post['loss_usd'] }}
+											{%- else -%}
+												Value Loss (USD): Unknown
+											{%- endif -%}
                       &nbsp;
                       </p>
 										</div>
