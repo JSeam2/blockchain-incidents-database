@@ -60,9 +60,9 @@ class Settings:
                 [('query', 1), ('orderby', 1)])
             self.config['USERS_COLLECTION'].ensure_index([('date', 1)])
 
-            post_short_description = "Lorem ipsum dolor sit amet, consectetur"
+            incident_short_description = "Lorem ipsum dolor sit amet, consectetur"
 
-            post_description = """Lorem ipsum dolor sit amet, consectetur \
+            incident_description = """Lorem ipsum dolor sit amet, consectetur \
             adipisicing elit, sed do eiusmod tempor incididunt ut labore et \
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
             exercitation ullamco laboris nisi ut aliquip ex ea commodo \
@@ -72,20 +72,20 @@ class Settings:
             deserunt mollit anim id est laborum."""
 
 
-            post_data = {'title': 'Hello World!',
+            post_data = {'incident_title': 'Hello World!',
 
-                         'short-description': post_short_description,
-                         'description': post_description,
-                         'blockchain-platform': 'Test Blockchain Platform',
-                         'attack-vector' : 'Test attack vector',
-                         'vulnerability-exploited': 'Test vulnerability',
-                         'loss-crypto': '1234567890 BTC',
-                         'loss-usd': '1234567890 USD',
-                         'source-of-attack': 'Test source of attack',
-                         'resources': 'Test resources',
-                         'time-of-attack': '',
-                         'time-reported': '2014/10/10 00:00:00 +04:00',
-                         'tags': ['test'],
+                         'incident_short_description': incident_short_description,
+                         'incident_description': incident_description,
+                         'ttp_resource_infrastructure': 'Test Blockchain Platform',
+                         'incident_categories' : 'Test attack vector',
+                         'ttp_description': 'Test vulnerability',
+                         'ttp_exploits_targets': 'Test source of attack',
+                         'incident_time_initial_compromise': '01/01/2018',
+                         'incident_time_incident_reported': '01/01/2018',
+                         'loss_crypto': '100 BTC',
+                         'loss_usd': '100 USD',
+                         'description_geographical': 'Singapore',
+                         'references': 'https://localhost',
                          'author': user_data['_id']}
             post = postClass.validate_post_data(post_data)
 

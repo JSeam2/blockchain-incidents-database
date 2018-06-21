@@ -46,7 +46,7 @@ class Post:
                     'loss_crypto': post['loss-crypto'],
                     'loss_usd': post['loss_usd'],
                     'description_geographical': post['description_geographical'],
-                    'references': post['references']
+                    'references': post['references'],
                     'date': post['date'],
                     'permalink': post['permalink'],
                     'author': post['author'],
