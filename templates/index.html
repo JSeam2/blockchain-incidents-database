@@ -14,7 +14,8 @@
 
 										<!-- Header Field For Incident Entry -->
 										<div class="page-header">
-											<h3><a href="{{ url_for('single_post', permalink=post['permalink']) }}">{{ post['title'] | safe }}</a></h3>
+											<h3><a href="{{ url_for('single_post',
+                          permalink=post['permalink']) }}">{{ post['incident_title'] | safe }}</a></h3>
 											<p><span class="icon-time">&nbsp;</span>
                       {%- if post['date'] -%}
                         Date Of Creation: {{ post['date'] | formatdate }}
@@ -23,24 +24,24 @@
                       {%- endif -%}
                       </p>
 											<p><span class="icon-time">&nbsp;</span>
-                      {%- if post['date-of-attack'] -%}
-                        Date Of Attack: {{ post['date-of-attack'] | formatdate }}
+                      {%- if post['incident_time_initial_compromise'] -%}
+                        Date Of Initial Compromise: {{ post['incident_time_initial_compromise'] | formatdate }}
                       {%- else -%}
-                        Date Of Attack: Unknown
+                        Date Of Initial Compromise: Unknown
                       {%- endif -%}
                       </p>
 											<p><span class="icon-btc">&nbsp;</span>
-                      Value Loss (Crypto): {{ post['loss-crypto'] }}
+                      Value Loss (Crypto): {{ post['loss_crypto'] }}
                       </p>
 											<p><span class="icon-usd">&nbsp;</span>
-                      Value Loss (USD) : {{ post['loss-usd'] }}
+                      Value Loss (USD) : {{ post['loss_usd'] }}
                       &nbsp;
                       </p>
 										</div>
 
 										<div class="content no-lightbox">
-											{%- if post['short-description'] -%}
-												{{ post['short-description'] | markdown }}
+											{%- if post['incident_short_description'] -%}
+												{{ post['incident_short_description'] | markdown }}
 											{%- endif -%}
 											<a href="{{ url_for('single_post', permalink=post['permalink']) }}">More Details ... </a>
 										</div>

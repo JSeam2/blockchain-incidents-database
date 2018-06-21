@@ -77,7 +77,7 @@ class Settings:
                          'incident_short_description': incident_short_description,
                          'incident_description': incident_description,
                          'ttp_resource_infrastructure': 'Test Blockchain Platform',
-                         'incident_categories' : 'Test attack vector',
+                         'incident_categories' : 'Smart Contract',
                          'ttp_description': 'Test vulnerability',
                          'ttp_exploits_targets': 'Test source of attack',
                          'incident_time_initial_compromise': '01/01/2018',

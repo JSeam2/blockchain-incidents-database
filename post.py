@@ -33,7 +33,7 @@ class Post:
 
                 self.response['data'].append({
                     'id': post['_id'],
-                    'incident_title': post['title'],
+                    'incident_title': post['incident_title'],
                     'incident_short_description': post['incident_short_description'],
                     'incident_description': post['incident_description'],
                     'ttp_resource_infrastructure': post['ttp_resource_infrastructure'],
@@ -43,7 +43,7 @@ class Post:
                     'incident_time_initial_compromise': post['incident_time_initial_compromise'],
                     'incident_time_incident_reported': post['incident_time_incident_reported'],
 
-                    'loss_crypto': post['loss-crypto'],
+                    'loss_crypto': post['loss_crypto'],
                     'loss_usd': post['loss_usd'],
                     'description_geographical': post['description_geographical'],
                     'references': post['references'],
@@ -215,31 +215,70 @@ class Post:
         post_data['incident_title'] = cgi.escape(post_data['incident_title'])
         post_data['incident_short_description'] = cgi.escape(post_data['incident_short_description'], quote=True)
         post_data['incident_description'] = cgi.escape(post_data['incident_description'], quote=True)
-        post_data['ttp_resource_infrastructure'] = cgi.escape(post_data['ttp_resource_infrastructure'])
-        post_data['incident_categories'] = cgi.escape(post_data['incident_categories'])
-        post_data['ttp_description'] = cgi.escape(post_data['ttp_description'])
-        post_data['ttp_exploits_targets'] = cgi.escape(post_data['ttp_exploits_targets'])
+
+        # Sanitize data, put as None if there's an error
+        try:
+            post_data['ttp_resource_infrastructure'] = cgi.escape(post_data['ttp_resource_infrastructure'])
+        except:
+            post_data['ttp_resource_infrastructure'] = None
+
+
+        try:
+            post_data['incident_categories'] = cgi.escape(post_data['incident_categories'])
+        except:
+            post_data['incident_categories'] = None
+
+
+        try:
+            post_data['ttp_description'] = cgi.escape(post_data['ttp_description'])
+        except:
+            post_data['ttp_description'] = None
+
+
+        try:
+            post_data['ttp_exploits_targets'] = cgi.escape(post_data['ttp_exploits_targets'])
+        except:
+            post_data['ttp_exploits_targets'] = None
+
 
         try:
             post_data['incident_time_initial_compromise'] = \
                 parse(cgi.escape(post_data['incident_time_initial_compromise']))
 
-        # Put as None if there is a bug
         except:
             post_data['incident_time_initial_compromise'] = None
+
 
         try:
             post_data['incident_time_incident_reported'] = \
                 parse((post_data['incident_time_incident_reported']))
 
-        # Put as None if there is a bug
         except:
             post_data['incident_time_incident_reported'] = None
 
-        post_data['loss_crypto'] = cgi.escape(post_data['loss_crypto'])
-        post_data['loss_usd'] = cgi.escape(post_data['loss_usd'])
-        post_data['description_geographical'] = cgi.escape(post_data['description_geographical'])
-        post_data['references'] = cgi.escape(post_data['references'])
+
+        try:
+            post_data['loss_crypto'] = cgi.escape(post_data['loss_crypto'])
+        except:
+            post_data['loss_crypto'] = None
+
+
+        try:
+            post_data['loss_usd'] = cgi.escape(post_data['loss_usd'])
+        except:
+            post_data['loss_usd'] = None
+
+
+        try:
+            post_data['description_geographical'] = cgi.escape(post_data['description_geographical'])
+        except:
+            post_data['description_geographical'] = None
+
+
+        try:
+            post_data['references'] = cgi.escape(post_data['references'])
+        except:
+            post_data['references'] = None
 
         # append to to post_data
         post_data['date'] = datetime.datetime.utcnow()

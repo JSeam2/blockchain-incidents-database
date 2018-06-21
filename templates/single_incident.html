@@ -6,7 +6,7 @@
 			<div class="row">
 				<div class="col-lg-8">
 					<div class="page-header">
-						<h2>{{ post['title'] | safe }}</h2>
+						<h2>{{ post['incident_title'] | safe }}</h2>
 						<p>
 						<span class="icon-time">&nbsp;</span>
             {%- if post['date'] -%}
@@ -17,27 +17,27 @@
 						</p>
 						<p>
 						<span class="icon-time">&nbsp;</span>
-            {%- if post['date-reported'] -%}
-              Date Reported: {{ post['date-reported'] }}
+            {%- if post['incident_time_incident_reported'] -%}
+              Date Reported: {{ post['incident_time_incident_reported'] }}
             {%- else -%}
               Date Reported: Unknown
             {%- endif -%}
 						</p>
 						<p>
 						<span class="icon-time">&nbsp;</span>
-            {%- if post['date-of-attack'] -%}
-              Date Of Attack: {{ post['date-of-attack'] }}
+            {%- if post['incident_time_initial_compromised'] -%}
+              Date Of Initial Compromise: {{ post['incident_time_initial_compromise'] }}
             {%- else -%}
-              Date Of Attack: Unknown
+              Date Of Initial Compromise: Unknown
             {%- endif -%}
 						</p>
 						<p>
 						<span class="icon-btc">&nbsp;</span>
-						Loss (Crypto): {{ post['loss-crypto'] }} 
+						Loss (Crypto): {{ post['loss_crypto'] }} 
 						</p>
 						<p>
 						<span class="icon-usd">&nbsp;</span>
-						Loss (USD): {{ post['loss-usd'] }} 
+						Loss (USD): {{ post['loss_usd'] }} 
 						&nbsp;
 						<span class="glyphicon glyphicon-question-sign" 
 							data-toggle="popover" 
@@ -47,30 +47,30 @@
 						</span>
 						</p>
 						<p>
-						Blockchain Platform: {{ post['blockchain-platform'] }} 
+            TTP -> Resources -> Infrastructure: {{ post['ttp_resource_infrastructure'] }} 
 						</p>
 						<p>
-						Attack Vector: {{ post['attack-vector'] }} 
+            Incident -> Categories : {{ post['incident_categories'] }} 
 						</p>
 						<p>
-						Vulnerability Exploited: {{ post['vulnerability-exploited'] }}
+						TTP -> Description: {{ post['ttp_description'] }}
 						</p>
 						<p>
-						Source Of Attack: {{ post['source-of-attack'] }}
+            TTP -> Exploits Targets: {{ post['ttp_exploits_targets'] }}
 						</p>
 						<p>
-						Resources: {{ post['resources'] }} 
+						References: {{ post['references'] }} 
 						</p>
 					</div>
 					<div class="content article">
             <strong>Short Description</strong>
             <p>
-              {{ post ['short-description'] | markdown }}
+              {{ post ['incident_short_description'] | markdown }}
             </p>
 
             <strong>Description</strong>
 						<p>
-						{{ post['description'] | markdown }}
+						{{ post['incident_description'] | markdown }}
 						</p>
 						<!-- to include if we want to see authors -->
 						<!-- {{ post['author'] }} -->

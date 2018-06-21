@@ -10,7 +10,7 @@
 		{% set incident_title = '' %}
 		{% set incident_short_description = '' %}
 		{% set incident_description = '' %}
-		{% set ttp_resource_infrastructure = '' %}
+		{% set ttp_resources_infrastructure = '' %}
 		{% set incident_categories = '' %}
 		{% set ttp_description = '' %}
 		{% set ttp_exploits_targets = '' %}
@@ -117,7 +117,7 @@
                 data-placement="right" 
                 data-content="Blockchain platforms or cryptocurrencies (BTC, ETH, LTC) the attack is associated with">
               </span>
-							<input type="text" id="ttp-resources-infrastructure" name="ttp-resources-infrastructure" placeholder="Infrastructure, Blockchain Platform (eg. Bitcoin, Ethereum, etc.)" class="form-control" value="{{ ttp_resource_infrastructure | safe }}">
+							<input type="text" id="ttp-resource-infrastructure" name="ttp-resource-infrastructure" placeholder="Infrastructure, Blockchain Platform (eg. Bitcoin, Ethereum, etc.)" class="form-control" value="{{ ttp_resource_infrastructure | safe }}">
 						</div>
 
 						<!-- Incident -> Categories -->

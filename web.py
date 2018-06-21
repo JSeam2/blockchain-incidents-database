@@ -53,7 +53,9 @@ def single_post(permalink):
     post = postClass.get_post_by_permalink(permalink)
     if not post['data']:
         abort(404)
-    return render_template('single_incident.html', post=post['data'], meta_title=app.config['BLOG_TITLE'] + '::' + post['data']['title'])
+    return render_template('single_incident.html', post=post['data'],
+                           meta_title=app.config['BLOG_TITLE'] + '::' +
+                           post['data']['incident_title'])
 
 
 @app.route('/q/<query>', defaults={'page': 1})
@@ -87,83 +89,90 @@ def search():
 @login_required()
 def new_post():
     """
-    Stores the post data from /newincident into MongoDB
-
-    Fields used (this should be self-explanatory):
-
-        #################
-            Basic STIX
-        #################
-        post-title
-        post-description
-        post-blockchain-platform
-        post-attack-vector
-        post-vulnerability-exploited
-        post-loss-crypto
-        post-loss-usd
-        post-source-of-attack
-        post-resources
-        post-time-of-attack
-        post-time-reported
-
-        #################
-          Advanced STIX
-        #################
-
+    Stores the post data from /new_incident into MongoDB
     """
     error = False
     error_type = 'validate'
     if request.method == 'POST':
-        post_title = request.form.get('post-title').strip()
-        post_short_description = request.form.get('post-short-description')
-        post_description = request.form.get('post-description')
+        title = request.form.get('incident-title').strip()
+        short_description = request.form.get('incident-short-description')
+        description = request.form.get('incident-description')
 
-        if not post_title \
-           or not post_description \
-           or not post_short_description:
+        if not title \
+           or not description \
+           or not short_description:
             error = True
 
         else:
-            tags = cgi.escape(request.form.get('post-tags'))
-            tags_array = extract_tags(tags)
+            # Sanitize data
+            try:
+                ttp_resource_infrastructure = \
+                    request.form.get('ttp-resource-infrastructure').strip()
+            except:
+                ttp_resource_infrastructure = None
+
+            try:
+                incident_categories = \
+                    request.form.get('incident-categories').strip()
+            except:
+                incident_categories = None
+
+            try:
+                ttp_description = request.form.get('ttp-description').strip()
+            except:
+                ttp_description = None
+
+            try:
+                ttp_exploits_targets = request.form.get('ttp-exploits-targets').strip()
+            except:
+                ttp_exploits_targets = None
+
+            try:
+                initial_compromise = request.form.get('incident-time-initial-compromise').strip()
+            except:
+                initial_compromise = None
+
+            try:
+                reported = request.form.get('incident-time-incident-reported').strip()
+            except:
+                reported = None
+
+            try:
+                loss_crypto = request.form.get('loss-crypto').strip()
+            except:
+                loss_crypto = None
+
+            try:
+                loss_usd = request.form.get('loss-usd').strip()
+            except:
+                loss_usd = None
+
+            try:
+                geographical = request.form.get('description-geographical').strip(),
+            except:
+                geographical = None
+
+            try:
+                references = request.form.get('references').strip()
+            except:
+                references = None
 
             # Data dictionary to input into MongoDB 
-            post_data = {'title': post_title,
-
-                         'short-description': post_short_description,
-
-                         'description': post_description,
-
-                         'blockchain-platform': \
-                            request.form.get('post-blockchain-platform').strip(),
-
-                         'attack-vector': \
-                            request.form.get('post-attack-vector').strip(),
-
-                         'vulnerability-exploited': \
-                            request.form.get('post-vulnerability-exploited').strip(),
-
-                         'loss-crypto': \
-                            request.form.get('post-loss-crypto').strip(),
-
-                         'loss-usd': \
-                            request.form.get('post-loss-usd').strip(),
-
-                         'source-of-attack': \
-                            request.form.get('post-source-of-attack').strip(),
-
-                         'resources': \
-                            request.form.get('post-resources').strip(),
-
-                         'time-of-attack': \
-                            request.form.get('post-time-of-attack').strip(),
-
-                         'time-reported': \
-                            request.form.get('post-time-reported').strip(),
-
-                         'tags': tags_array,
-
-                         'author': session['user']['username']}
+            post_data = {
+                'incident_title': title,
+                'incident_short_description': short_description,
+                'incident_description': description,
+                'ttp_resource_infrastructure': ttp_resource_infrastructure,
+                'incident_categories': incident_categories,
+                'ttp_description': ttp_description,
+                'ttp_exploits_targets': ttp_exploits_targets,
+                'incident_time_initial_compromise': initial_compromise,
+                'incident_time_incident_reported': reported,
+                'loss_crypto': loss_crypto,
+                'loss_usd': loss_usd,
+                'description_geographical': geographical,
+                'references': references,
+                'author': session['user']['username']}
 
             # Check for excape
             post = postClass.validate_post_data(post_data)
