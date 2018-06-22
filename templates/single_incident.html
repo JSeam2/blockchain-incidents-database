@@ -9,14 +9,6 @@
 						<h2>{{ post['incident_title'] | safe }}</h2>
 						<p>
 						<span class="icon-time">&nbsp;</span>
-            {%- if post['date'] -%}
-              Date Of Creation: {{ post['date'] | formatdate }}
-            {%- else -%}
-              Date Of Creation: Unknown
-            {%- endif -%}
-						</p>
-						<p>
-						<span class="icon-time">&nbsp;</span>
             {%- if post['incident_time_incident_reported'] -%}
               Date Reported: {{ post['incident_time_incident_reported'] }}
             {%- else -%}
@@ -74,6 +66,14 @@
 						</p>
 						<!-- to include if we want to see authors -->
 						<!-- {{ post['author'] }} -->
+						</br>
+						<p>
+            {%- if post['date'] -%}
+							<em>Date Of Creation: {{ post['date'] | formatdate }}</em>
+            {%- else -%}
+							<em>Date Of Creation: Unknown</em>
+            {%- endif -%}
+						</p>
 					</div>
 					<hr>
 					<div class="social row-fluid">

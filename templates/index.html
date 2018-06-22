@@ -17,13 +17,6 @@
 											<h3><a href="{{ url_for('single_post',
                           permalink=post['permalink']) }}">{{ post['incident_title'] | safe }}</a></h3>
 											<p><span class="icon-time">&nbsp;</span>
-                      {%- if post['date'] -%}
-                        Date Of Creation: {{ post['date'] | formatdate }}
-                      {%- else -%}
-                        Date Of Creation: Unknown
-                      {%- endif -%}
-                      </p>
-											<p><span class="icon-time">&nbsp;</span>
                       {%- if post['incident_time_initial_compromise'] -%}
                         Date Of Initial Compromise: {{ post['incident_time_initial_compromise'] | formatdate }}
                       {%- else -%}
@@ -53,6 +46,14 @@
 											{%- endif -%}
 											<a href="{{ url_for('single_post', permalink=post['permalink']) }}">More Details ... </a>
 										</div>
+										</br>
+										<p>
+											{%- if post['date'] -%}
+											<em>Date Of Creation: {{ post['date'] | formatdate }}</em>
+											{%- else -%}
+											<em>Date Of Creation: Unknown</em>
+											{%- endif -%}
+										</p>
 									</div>
 								</div>
 							</div>
