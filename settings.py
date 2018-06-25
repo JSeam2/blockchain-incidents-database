@@ -60,8 +60,6 @@ class Settings:
                 [('query', 1), ('orderby', 1)])
             self.config['USERS_COLLECTION'].ensure_index([('date', 1)])
 
-            incident_short_description = "Lorem ipsum dolor sit amet, consectetur"
-
             incident_description = """Lorem ipsum dolor sit amet, consectetur \
             adipisicing elit, sed do eiusmod tempor incididunt ut labore et \
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
@@ -73,8 +71,6 @@ class Settings:
 
 
             post_data = {'incident_title': 'Hello World!',
-
-                         'incident_short_description': incident_short_description,
                          'incident_description': incident_description,
                          'ttp_resource_infrastructure': 'Test Blockchain Platform',
                          'incident_categories' : 'Smart Contract',
@@ -86,6 +82,7 @@ class Settings:
                          'loss_usd': '100 USD',
                          'description_geographical': 'Singapore',
                          'references': 'https://localhost',
+                         'advanced': None,
                          'author': user_data['_id']}
             post = postClass.validate_post_data(post_data)
 

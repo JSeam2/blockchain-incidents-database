@@ -20,6 +20,7 @@
 		{% set loss_usd = '' %}
 		{% set description_geographical = '' %}
 		{% set references = '' %}
+		{% set advanced = '' %}
 	{% endif %}
 :
 	<!-- TODO tooltips -->
@@ -65,6 +66,7 @@
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
 								<label class="control-label" for="incident-title">Required field</label>
+								<br>
 							{%- endif -%}
 								<label>Incident -> Title</label>
 								&nbsp;
@@ -77,25 +79,11 @@
 						</div>
 
 
-						<!-- Incident -> Short Description -->
-						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
-							{%- if error and error_type == 'validate' -%}
-								<label class="control-label" for="incident-short-description">Required field</label>
-							{%- endif -%}
-								<label>Incident -> Short Description</label>
-								&nbsp;
-								<span class="glyphicon glyphicon-question-sign" 
-									data-toggle="popover" 
-									data-placement="right" 
-									data-content="Summary of description">
-								</span>
-						    <textarea id="incident-short-description" name="incident-short-description" class="form-control" rows="3" placeholder="Short Description" required>{{ incident_short_description | safe }}</textarea>
-						</div>
-
 						<!-- Incident -> Description -->
 						<div class="form-group {% if error and error_type == 'validate' %} has-error{% endif %}">
 							{%- if error and error_type == 'validate' -%}
 								<label class="control-label" for="incident-description">Required field</label>
+								<br>
 							{%- endif -%}
 								<label>Incident -> Description</label>
 								&nbsp;
@@ -265,8 +253,20 @@
 						<br>
 						<hr>
 
-						<h3>Advanced Stix Fields</h3>
-						<!-- TODO -->
+						<!-- TODO fix the collapse -->
+						<h3>Advanced Stix Fields
+							<span class="icon-caret-down" id="collapse-btn"></span>
+						</h3>
+						<div class="form-group collapse in" id="json-input">
+								<label>JSON Input</label>
+								&nbsp;
+								<span class="glyphicon glyphicon-question-sign" 
+									data-toggle="popover" 
+									data-placement="right" 
+									data-content="JSON input of form field for other advanced STIX fields. TBC">
+								</span>
+								<textarea id="advanced" name="advanced" class="form-control" rows="7" placeholder="JSON input">{{ advanced | safe }}</textarea>
+						</div>
 
 						<br>
 						<hr>

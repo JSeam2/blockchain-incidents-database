@@ -12,7 +12,7 @@
             {%- if post['incident_time_incident_reported'] -%}
               Date Reported: {{ post['incident_time_incident_reported'] }}
             {%- else -%}
-              Date Reported: Unknown
+              Date Reported: None
             {%- endif -%}
 						</p>
 						<p>
@@ -20,7 +20,7 @@
             {%- if post['incident_time_initial_compromised'] -%}
               Date Of Initial Compromise: {{ post['incident_time_initial_compromise'] }}
             {%- else -%}
-              Date Of Initial Compromise: Unknown
+              Date Of Initial Compromise: None
             {%- endif -%}
 						</p>
 						<p>
@@ -55,11 +55,6 @@
 						</p>
 					</div>
 					<div class="content article">
-            <strong>Short Description</strong>
-            <p>
-              {{ post ['incident_short_description'] | markdown }}
-            </p>
-
             <strong>Description</strong>
 						<p>
 						{{ post['incident_description'] | markdown }}
@@ -71,7 +66,7 @@
             {%- if post['date'] -%}
 							<em>Date Of Creation: {{ post['date'] | formatdate }}</em>
             {%- else -%}
-							<em>Date Of Creation: Unknown</em>
+							<em>Date Of Creation: None</em>
             {%- endif -%}
 						</p>
 					</div>

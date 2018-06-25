@@ -95,12 +95,10 @@ def new_post():
     error_type = 'validate'
     if request.method == 'POST':
         title = request.form.get('incident-title').strip()
-        short_description = request.form.get('incident-short-description')
         description = request.form.get('incident-description')
 
         if not title \
-           or not description \
-           or not short_description:
+           or not description:
             error = True
 
         else:
@@ -157,10 +155,14 @@ def new_post():
             except:
                 references = None
 
+            try:
+                advanced = request.form.get('advanced').strip()
+            except:
+                advanced = None
+
             # Data dictionary to input into MongoDB 
             post_data = {
                 'incident_title': title,
-                'incident_short_description': short_description,
                 'incident_description': description,
                 'ttp_resource_infrastructure': ttp_resource_infrastructure,
                 'incident_categories': incident_categories,
@@ -172,6 +174,8 @@ def new_post():
                 'loss_usd': loss_usd,
                 'description_geographical': geographical,
                 'references': references,
+                'advanced': advanced,
+
                 'author': session['user']['username']}
 
             # Check for excape
@@ -251,7 +255,7 @@ def post_edit(id):
     if session.get('post-preview') and session['post-preview']['action'] == 'add':
         session.pop('post-preview', None)
     return render_template('edit_incident.html',
-                           meta_title='Edit post::' + post['data']['title'],
+                           meta_title='Edit post::' + post['data']['incident_title'],
                            post=post['data'],
                            error=False,
                            error_type=False)

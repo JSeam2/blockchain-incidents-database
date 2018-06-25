@@ -20,29 +20,29 @@
                       {%- if post['incident_time_initial_compromise'] -%}
                         Date Of Initial Compromise: {{ post['incident_time_initial_compromise'] | formatdate }}
                       {%- else -%}
-                        Date Of Initial Compromise: Unknown
+                        Date Of Initial Compromise: None
                       {%- endif -%}
                       </p>
 											<p><span class="icon-btc">&nbsp;</span>
 											{%- if post['loss_crypto'] -%}
 												Value Loss (Crypto): {{ post['loss_crypto'] }}
 											{%- else -%}
-												Value Loss (Crypto): Unknown
+												Value Loss (Crypto): None 
 											{%- endif -%}
                       </p>
 											<p><span class="icon-usd">&nbsp;</span>
 											{%- if post['loss_usd'] -%}
 												Value Loss (USD): {{ post['loss_usd'] }}
 											{%- else -%}
-												Value Loss (USD): Unknown
+												Value Loss (USD): None
 											{%- endif -%}
                       &nbsp;
                       </p>
 										</div>
 
 										<div class="content no-lightbox">
-											{%- if post['incident_short_description'] -%}
-												{{ post['incident_short_description'] | markdown }}
+											{%- if post['incident_preview'] -%}
+												{{ post['incident_preview'] | markdown }}
 											{%- endif -%}
 											<a href="{{ url_for('single_post', permalink=post['permalink']) }}">More Details ... </a>
 										</div>

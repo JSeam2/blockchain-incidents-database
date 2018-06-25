@@ -19,22 +19,20 @@ class Post:
             cond = {'tags': tag}
         elif search is not None:
             cond = {'$or': [
-                    {'title': {'$regex': search, '$options': 'i'}},
-                    {'description': {'$regex': search, '$options': 'i'}}]}
+                    {'incident_title': {'$regex': search, '$options': 'i'}},
+                    {'incident_description': {'$regex': search, '$options': 'i'}}]}
         try:
             cursor = self.collection.find(cond).sort(
                 'date', direction=-1).skip(skip).limit(limit)
             self.response['data'] = []
             for post in cursor:
-                if 'tags' not in post:
-                    post['tags'] = []
                 if 'comments' not in post:
                     post['comments'] = []
 
                 self.response['data'].append({
                     'id': post['_id'],
                     'incident_title': post['incident_title'],
-                    'incident_short_description': post['incident_short_description'],
+                    'incident_preview': post['incident_preview'],
                     'incident_description': post['incident_description'],
                     'ttp_resource_infrastructure': post['ttp_resource_infrastructure'],
                     'incident_categories': post['incident_categories'],
@@ -47,6 +45,8 @@ class Post:
                     'loss_usd': post['loss_usd'],
                     'description_geographical': post['description_geographical'],
                     'references': post['references'],
+                    'advanced': post['advanced'],
+
                     'date': post['date'],
                     'permalink': post['permalink'],
                     'author': post['author'],
@@ -92,8 +92,8 @@ class Post:
             cond = {'tags': tag}
         elif search is not None:
             cond = {'$or': [
-                    {'title': {'$regex': search, '$options': 'i'}},
-                    {'description': {'$regex': search, '$options': 'i'}}]}
+                    {'incident_title': {'$regex': search, '$options': 'i'}},
+                    {'incident_description': {'$regex': search, '$options': 'i'}}]}
 
         return self.collection.find(cond).count()
 
@@ -163,7 +163,6 @@ class Post:
             Dictionary of post data consists of the following string keys:
                 'id'
                 'incident_title'
-                'incident_short_description'
                 'incident_description'
                 'ttp_resource_infrastructure'
                 'incident_categories'
@@ -184,7 +183,7 @@ class Post:
             Dictionary of out post data consists of the following string keys:
                 'id'
                 'incident_title'
-                'incident_short_description'
+                'incident_preview'
                 'incident_description'
                 'ttp_resource_infrastructure'
                 'incident_categories'
@@ -213,8 +212,12 @@ class Post:
 
         # Escape user input fields
         post_data['incident_title'] = cgi.escape(post_data['incident_title'])
-        post_data['incident_short_description'] = cgi.escape(post_data['incident_short_description'], quote=True)
         post_data['incident_description'] = cgi.escape(post_data['incident_description'], quote=True)
+        # Get 150 char
+        description = post_data['incident_description']
+        post_data['incident_preview'] = (description[:150] + "...") if \
+                                            len(description) > 150 \
+                                            else description
 
         # Sanitize data, put as None if there's an error
         try:
@@ -224,7 +227,7 @@ class Post:
 
 
         try:
-            post_data['incident_categories'] = cgi.escape(post_data['incident_categories'])
+            post_data['inciden_categories'] = cgi.escape(post_data['incident_categories'])
         except:
             post_data['incident_categories'] = None
 
