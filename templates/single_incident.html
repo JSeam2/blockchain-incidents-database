@@ -10,15 +10,15 @@
 						<p>
 						<span class="icon-time">&nbsp;</span>
             {%- if post['incident_time_incident_reported'] -%}
-              Date Reported: {{ post['incident_time_incident_reported'] }}
+              Date Reported: {{ post['incident_time_incident_reported'] | formatdate }}
             {%- else -%}
               Date Reported: None
             {%- endif -%}
 						</p>
 						<p>
 						<span class="icon-time">&nbsp;</span>
-            {%- if post['incident_time_initial_compromised'] -%}
-              Date Of Initial Compromise: {{ post['incident_time_initial_compromise'] }}
+            {%- if post['incident_time_initial_compromise'] -%}
+              Date Of Initial Compromise: {{ post['incident_time_initial_compromise'] | formatdate }}
             {%- else -%}
               Date Of Initial Compromise: None
             {%- endif -%}

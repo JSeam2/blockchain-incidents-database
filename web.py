@@ -528,7 +528,7 @@ def page_not_found(error):
 
 
 @app.template_filter('formatdate')
-def format_datetime_filter(input_value, format_="%a, %d %b %Y"):
+def format_datetime_filter(input_value, format_="%Y %m %d"):
     return input_value.strftime(format_)
 
 

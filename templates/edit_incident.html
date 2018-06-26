@@ -8,7 +8,7 @@
 			{% set post_tags = ','.join(tags) %}
 		{% endif %}
 	{% else %}
-		{% set post_title = post.get('incident_title') %}
+		{% set incident_title = post.get('incident_title') %}
 		{% set incident_description = post.get('incident_description') %}
 	{% endif %}
 	<div class="post clearfix">
