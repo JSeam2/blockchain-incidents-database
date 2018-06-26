@@ -104,10 +104,10 @@ def new_post():
         else:
             # Sanitize data
             try:
-                ttp_resource_infrastructure = \
-                    request.form.get('ttp-resource-infrastructure').strip()
+                ttp_resources_infrastructure = \
+                    request.form.get('ttp-resources-infrastructure').strip()
             except:
-                ttp_resource_infrastructure = None
+                ttp_resources_infrastructure = None
 
             try:
                 incident_categories = \
@@ -225,7 +225,7 @@ def new_post():
 @login_required()
 def post_preview():
     post = session.get('post-preview')
-    return render_template('preview.html', post=post, meta_title='Preview post::' + post['title'])
+    return render_template('preview.html', post=post, meta_title='Preview post::' + post['incident_title'])
 
 
 @app.route('/incidents_list', defaults={'page': 1})

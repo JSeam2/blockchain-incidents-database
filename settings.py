@@ -72,7 +72,7 @@ class Settings:
 
             post_data = {'incident_title': 'Hello World!',
                          'incident_description': incident_description,
-                         'ttp_resource_infrastructure': 'Test Blockchain Platform',
+                         'ttp_resources_infrastructure': 'Test Blockchain Platform',
                          'incident_categories' : 'Smart Contract',
                          'ttp_description': 'Test vulnerability',
                          'ttp_exploits_targets': 'Test source of attack',

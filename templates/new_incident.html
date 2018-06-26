@@ -22,7 +22,7 @@
 		{% set references = '' %}
 		{% set advanced = '' %}
 	{% endif %}
-:
+
 	<!-- TODO tooltips -->
 	<div class="post clearfix">
 		<div class="row">
@@ -105,7 +105,7 @@
                 data-placement="right" 
                 data-content="Blockchain platforms or cryptocurrencies (BTC, ETH, LTC) the attack is associated with">
               </span>
-							<input type="text" id="ttp-resource-infrastructure" name="ttp-resource-infrastructure" placeholder="Infrastructure, Blockchain Platform (eg. Bitcoin, Ethereum, etc.)" class="form-control" value="{{ ttp_resource_infrastructure | safe }}">
+							<input type="text" id="ttp-resources-infrastructure" name="ttp-resources-infrastructure" placeholder="Infrastructure, Blockchain Platform (eg. Bitcoin, Ethereum, etc.)" class="form-control" value="{{ ttp_resources_infrastructure | safe }}">
 						</div>
 
 						<!-- Incident -> Categories -->
@@ -126,7 +126,7 @@
 							
 							<datalist id="list-categories" name="incident-categories">
 								<option value="Opsec">Opsec : Vulnerabilities not originating from blockchain</option>
-								<option value="Smart Contract">Smart Contract : Smart Contract Vulnerabilityies</option>
+								<option value="Smart Contract">Smart Contract : Smart Contract Vulnerabilities</option>
 								<option value="Protocol & Incentives">Protocol & Incentives : Vulnerability from Protocol & Incentives</option>
 								<!-- TODO ADD MORE FORM DETAILS FROM GOOGLE DOCS -->
 							</datalist>
@@ -277,7 +277,8 @@
 							<!-- CSRF token -->
 							<input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
 							<input id="post-submit" type="submit" class="btn btn-primary" value="Submit">
-							<input id="post-preview" type="submit" class="btn" value="Preview">
+							<!-- incident preview TODO -->
+							<!-- <input id="post-preview" type="submit" class="btn" value="Preview">-->
 						</div>
 
 					</form>
