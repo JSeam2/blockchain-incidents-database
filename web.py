@@ -12,6 +12,7 @@ import user
 import pagination
 import settings
 from helper_functions import *
+import csv
 
 
 app = Flask('IncidentDB')
@@ -450,6 +451,7 @@ def install():
             'super': True,
             'update': False
         }
+
         blog_data = {
             'title': request.form.get('blog-title', None),
             'description': request.form.get('blog-description', None),
@@ -457,6 +459,8 @@ def install():
             'text_search': request.form.get('blog-text-search', None)
         }
         blog_data['text_search'] = 1 if blog_data['text_search'] else 0
+
+
 
         for key, value in user_data.items():
             if not value and key != 'update':
@@ -471,6 +475,45 @@ def install():
             error = True
         else:
             install_result = settingsClass.install(blog_data, user_data)
+
+            # install existing csv files
+            # Settle file upload
+            f = request.files['file-upload'].read()
+
+            # Decode f take as utf-8
+            f = f.decode('utf-8')
+
+            # Split lines 
+            f = f.splitlines()
+
+            # Read the file
+            csvreader = csv.reader(f, delimiter =',')
+
+            # skip header
+            next(csvreader)
+
+            # upload data to database
+            for lines in csvreader:
+                post_data = {'incident_title': lines[0],
+                             'incident_time_initial_compromise': lines[1],
+                             'incident_time_incident_reported': lines[2],
+                             'incident_description': lines[3],
+                             'ttp_resources_infrastructure': lines[4],
+                             'incident_categories' : lines[5],
+                             'ttp_description': lines[6],
+                             'ttp_exploits_targets': lines[7],
+                             'loss_crypto': lines[8],
+                             'loss_usd': lines[9],
+                             'description_geographical': lines[10],
+                             'references': lines[11],
+                             'advanced': None,
+                             'author': user_data['_id']}
+
+                post = postClass.validate_post_data(post_data)
+                post_create = postClass.create_new_post(post)
+
+
+
             if install_result['error']:
                 for i in install_result['error']:
                     if i is not None:
